@@ -172,6 +172,7 @@ export const sv: Record<MessageKey, string> = {
   'settings.about': 'Om appen',
   'settings.aboutText': 'Aktivitetsdagboken är ett kostnadsfritt verktyg för att registrera vardagens aktiviteter och se balansen mellan sömn, arbete, nöje och allt däremellan. Dina uppgifter lämnar aldrig din enhet.',
 
+  'a11y.skipToContent': 'Hoppa till innehållet',
   'a11y.openSettings': 'Öppna inställningar',
   'a11y.closeDialog': 'Stäng dialogrutan',
   'a11y.entrySummary': '{category} från {start} till {end}',

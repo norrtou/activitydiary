@@ -185,6 +185,7 @@ export const en = {
   'settings.aboutText': 'Activity Diary is a free tool for tracking everyday activities and seeing the balance between sleep, work, play and everything in between. Your data never leaves your device.',
 
   // Accessibility labels
+  'a11y.skipToContent': 'Skip to content',
   'a11y.openSettings': 'Open settings',
   'a11y.closeDialog': 'Close dialog',
   'a11y.entrySummary': '{category} from {start} to {end}',

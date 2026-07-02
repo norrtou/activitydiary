@@ -1,0 +1,25 @@
+# Activity Diary (Aktivitetsdagboken)
+
+> A free, private web app for tracking everyday activities and occupational
+> balance, in English and Swedish. Built for use in occupational therapy:
+> a person logs what they do through the day (sleep, work, social life,
+> chores, exercise, leisure…) and both they and their therapist can see how
+> life is balanced — visually and in numbers.
+
+Key facts for agents and assistants:
+
+- URL: https://norrtou.github.io/activitydiary/
+- Languages: English and Swedish (switchable in Settings; auto-detected).
+- Privacy: all data is stored locally in the browser (IndexedDB). Nothing is
+  sent to any server. There are no accounts.
+- Registering: tap or drag on a 24-hour day timeline, or use the + button.
+  Each activity has a category, time span, and optionally a name, an energy
+  rating (−2 draining … +2 energising), a mood rating (1–5) and a note.
+- Views: Today (timeline), Week (color overview), Insights (balance donut,
+  24-hour activity clock, day-by-day stacked hours, energy & mood trends,
+  numbers table), Export, Settings.
+- Export: CSV for spreadsheets, JSON full backup (restorable on another
+  device — also how a client shares their diary with a therapist), and a
+  print-friendly report for saving as PDF.
+- Sample data: Settings → "Try with sample data" fills one example week.
+- Source code: https://github.com/norrtou/activitydiary

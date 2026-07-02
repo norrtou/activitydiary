@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://norrtou.github.io/activitydiary/sitemap.xml

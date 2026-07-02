@@ -26,6 +26,9 @@ export function Layout() {
 
   return (
     <div className="app-shell">
+      <a href="#main" className="skip-link">
+        {t('a11y.skipToContent')}
+      </a>
       <nav className="app-nav" aria-label={t('nav.main')}>
         <div className="app-brand" aria-hidden>
           <span>📔</span>
