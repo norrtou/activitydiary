@@ -56,9 +56,7 @@ export function ReportPage() {
   if (!entries) return null;
 
   const dayCount = activeDayCount(entries);
-  const totals = categoryTotals(entries, Math.max(dayCount, 1)).sort(
-    (a, b) => b.minutes - a.minutes,
-  );
+  const totals = categoryTotals(entries).sort((a, b) => b.minutes - a.minutes);
   const registeredMin = totals.reduce((s, tot) => s + tot.minutes, 0);
   const sleepAvg = sleepAveragePerActiveDay(entries, categories);
   const hourUnit = t('common.hourUnit');
@@ -93,6 +91,7 @@ export function ReportPage() {
 
       <section>
         <h2>{t('insights.numbers')}</h2>
+        <p>{t('insights.numbersHint')}</p>
         <table>
           <thead>
             <tr>

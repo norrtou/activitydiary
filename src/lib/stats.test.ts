@@ -16,17 +16,18 @@ const entries: Entry[] = [
 ];
 
 describe('categoryTotals', () => {
-  it('sums minutes, shares and per-day averages', () => {
-    const totals = categoryTotals(entries, 7);
+  it('sums minutes, shares and averages per registered day', () => {
+    const totals = categoryTotals(entries);
     const sleep = totals.find((t) => t.categoryId === 1)!;
     expect(sleep.minutes).toBe(900);
-    expect(sleep.avgPerDayMin).toBeCloseTo(900 / 7);
+    // Two days have entries — empty days must not dilute the average.
+    expect(sleep.avgPerDayMin).toBeCloseTo(900 / 2);
     const sum = totals.reduce((s, t) => s + t.share, 0);
     expect(sum).toBeCloseTo(1);
   });
 
   it('is empty for no entries', () => {
-    expect(categoryTotals([], 7)).toEqual([]);
+    expect(categoryTotals([])).toEqual([]);
   });
 });
 

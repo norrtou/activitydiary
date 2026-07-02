@@ -122,6 +122,7 @@ export const en = {
   'insights.mood': 'Wellbeing',
   'insights.moodHint': 'Average mood rating per day',
   'insights.numbers': 'In numbers',
+  'insights.numbersHint': 'Averages count only days with entries.',
   'insights.category': 'Category',
   'insights.share': 'Share',
   'insights.avgPerDay': 'Avg/day',

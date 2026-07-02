@@ -89,7 +89,7 @@ export function InsightsPage() {
 
   if (!entries) return null;
 
-  const totals = categoryTotals(entries, days.length);
+  const totals = categoryTotals(entries);
   const usedCategories = categories.filter((c) =>
     totals.some((tot) => tot.categoryId === c.id && tot.minutes > 0),
   );
@@ -216,6 +216,7 @@ export function InsightsPage() {
 
           <section className="card chart-card chart-card-wide">
             <h2>{t('insights.numbers')}</h2>
+            <p className="muted">{t('insights.numbersHint')}</p>
             <div className="table-scroll">
               <table className="numbers-table">
                 <thead>
@@ -256,7 +257,7 @@ export function InsightsPage() {
                     <td>{hoursLabel(registeredMin, locale, hourUnit)}</td>
                     <td>100 %</td>
                     <td>
-                      {formatDuration(Math.round(registeredMin / days.length), hourUnit, minUnit)}
+                      {formatDuration(Math.round(registeredMin / activeDays), hourUnit, minUnit)}
                     </td>
                   </tr>
                 </tfoot>

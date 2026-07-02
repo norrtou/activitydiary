@@ -9,12 +9,16 @@ export interface CategoryTotal {
   minutes: number;
   /** Fraction of all registered time, 0–1. */
   share: number;
-  /** Average minutes per day across the whole period (including empty days). */
+  /** Average minutes per registered day (days that have at least one entry). */
   avgPerDayMin: number;
 }
 
-/** Total registered minutes per category over the period, largest first kept in category order. */
-export function categoryTotals(entries: Entry[], dayCount: number): CategoryTotal[] {
+/**
+ * Total registered minutes per category over the period. Averages divide by
+ * the number of days that actually have entries — a half-filled week should
+ * read "how much on a typical day", not be diluted by empty days.
+ */
+export function categoryTotals(entries: Entry[]): CategoryTotal[] {
   const byCat = new Map<number, number>();
   let total = 0;
   for (const e of entries) {
@@ -22,11 +26,12 @@ export function categoryTotals(entries: Entry[], dayCount: number): CategoryTota
     byCat.set(e.categoryId, (byCat.get(e.categoryId) ?? 0) + d);
     total += d;
   }
+  const days = activeDayCount(entries);
   return [...byCat.entries()].map(([categoryId, minutes]) => ({
     categoryId,
     minutes,
     share: total > 0 ? minutes / total : 0,
-    avgPerDayMin: dayCount > 0 ? minutes / dayCount : 0,
+    avgPerDayMin: days > 0 ? minutes / days : 0,
   }));
 }
 

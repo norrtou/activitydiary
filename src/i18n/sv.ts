@@ -111,6 +111,7 @@ export const sv: Record<MessageKey, string> = {
   'insights.mood': 'Mående',
   'insights.moodHint': 'Genomsnittligt mående per dag',
   'insights.numbers': 'I siffror',
+  'insights.numbersHint': 'Snittet räknas per dag med registreringar.',
   'insights.category': 'Kategori',
   'insights.share': 'Andel',
   'insights.avgPerDay': 'Snitt/dag',
