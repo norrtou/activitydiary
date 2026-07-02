@@ -186,6 +186,8 @@ export const en = {
 
   // Accessibility labels
   'a11y.skipToContent': 'Skip to content',
+  'a11y.hour': 'Hour',
+  'a11y.minute': 'Minute',
   'a11y.openSettings': 'Open settings',
   'a11y.closeDialog': 'Close dialog',
   'a11y.entrySummary': '{category} from {start} to {end}',

@@ -74,6 +74,7 @@ export function TodayPage() {
             id="day-picker"
             className="day-picker"
             type="date"
+            lang={locale}
             value={date}
             onChange={(e) => e.target.value && goTo(e.target.value)}
           />

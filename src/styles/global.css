@@ -1101,3 +1101,26 @@ dialog.sheet::backdrop {
 .skip-link:focus-visible {
   top: 12px;
 }
+
+/* ---------- 24h time select ---------- */
+
+.time-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time-select select {
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-m);
+  background: var(--surface-raised);
+  font-variant-numeric: tabular-nums;
+  flex: 1;
+}
+
+.time-select span {
+  font-weight: 700;
+  color: var(--ink-muted);
+}

@@ -15,6 +15,7 @@ import { resolveTheme, useSettings } from '../lib/settings';
 import { minutesToHHMM, parseHHMM, splitOverMidnight } from '../lib/time';
 import type { Category, Entry, EnergyRating, MoodRating } from '../lib/types';
 import { IconClose } from './icons';
+import { TimeSelect } from './TimeSelect';
 
 export interface SheetDraft {
   date: string;
@@ -138,23 +139,11 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
       <div className="time-row">
         <div className="field">
           <label htmlFor="entry-start">{t('entry.start')}</label>
-          <input
-            id="entry-start"
-            type="time"
-            required
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-          />
+          <TimeSelect id="entry-start" value={start} onChange={setStart} />
         </div>
         <div className="field">
           <label htmlFor="entry-end">{t('entry.end')}</label>
-          <input
-            id="entry-end"
-            type="time"
-            required
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
-          />
+          <TimeSelect id="entry-end" value={end} onChange={setEnd} />
         </div>
       </div>
       {crossesMidnight && <p className="muted">{t('entry.crossesMidnight')}</p>}
