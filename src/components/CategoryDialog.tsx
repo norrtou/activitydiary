@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n';
 import { db } from '../lib/db';
-import { categoryName } from '../lib/categoryName';
+import { categoryName, categoryQuickLabels } from '../lib/categoryName';
 import { SWATCHES, swatchColor } from '../lib/palette';
 import { resolveTheme, useSettings } from '../lib/settings';
 import type { Category } from '../lib/types';
@@ -27,6 +27,9 @@ export function CategoryDialog({ category, onClose }: Props) {
   const [name, setName] = useState(category ? categoryName(category, t) : '');
   const [icon, setIcon] = useState(category?.icon ?? '⭐');
   const [swatchId, setSwatchId] = useState(category?.swatchId ?? 'blue');
+  const [quickText, setQuickText] = useState(
+    category ? categoryQuickLabels(category, t).join(', ') : '',
+  );
 
   useEffect(() => {
     dialogRef.current?.showModal();
@@ -35,13 +38,26 @@ export function CategoryDialog({ category, onClose }: Props) {
   const save = async () => {
     const trimmed = name.trim();
     if (!trimmed) return;
+    const quick = quickText
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     if (category?.id != null) {
       const keepBuiltinName = category.builtinKey && trimmed === categoryName(category, t);
+      // Only store an own list when it differs from the translated defaults,
+      // so untouched built-ins keep following the app language.
+      const defaultQuick = category.builtinKey
+        ? t(`quick.${category.builtinKey}`).split('|')
+        : [];
+      // (a renamed built-in becomes custom, so its list must be stored too)
+      const keepDefaultQuick =
+        !!keepBuiltinName && quick.join('|') === defaultQuick.join('|');
       await db.categories.update(category.id, {
         // Only detach from i18n if the user actually changed the name.
         ...(keepBuiltinName ? {} : { name: trimmed, builtinKey: undefined }),
         icon: icon.trim() || '⭐',
         swatchId,
+        quickLabels: keepDefaultQuick ? undefined : quick,
       });
     } else {
       const all = await db.categories.toArray();
@@ -50,6 +66,7 @@ export function CategoryDialog({ category, onClose }: Props) {
         name: trimmed,
         icon: icon.trim() || '⭐',
         swatchId,
+        quickLabels: quick.length > 0 ? quick : undefined,
         sortOrder: maxSort + 1,
       });
     }
@@ -91,6 +108,20 @@ export function CategoryDialog({ category, onClose }: Props) {
           maxLength={4}
           style={{ width: 80, textAlign: 'center', fontSize: '1.3rem' }}
           onChange={(e) => setIcon(e.target.value)}
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor="cat-quick">
+          {t('settings.quickLabels', { optional: t('common.optional') })}
+        </label>
+        <p className="muted">{t('settings.quickLabelsHint')}</p>
+        <input
+          id="cat-quick"
+          type="text"
+          value={quickText}
+          maxLength={300}
+          onChange={(e) => setQuickText(e.target.value)}
         />
       </div>
 

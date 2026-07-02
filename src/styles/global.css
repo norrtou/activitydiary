@@ -406,7 +406,9 @@ dialog.sheet {
   max-width: 560px;
   max-height: 88dvh;
   overflow-y: auto;
-  padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+  /* No bottom padding: the sticky .sheet-actions row carries it, so the
+     save/cancel buttons stay visible while the fields scroll behind them. */
+  padding: 20px 20px 0;
   animation: sheet-in 0.22s ease;
 }
 
@@ -445,6 +447,11 @@ dialog.sheet::backdrop {
   gap: 10px;
   justify-content: flex-end;
   margin-top: 20px;
+  position: sticky;
+  bottom: 0;
+  background: var(--surface-raised);
+  border-top: 1px solid var(--hairline);
+  padding: 12px 0 calc(16px + env(safe-area-inset-bottom));
 }
 
 .sheet-actions .btn {
@@ -548,6 +555,20 @@ dialog.sheet::backdrop {
 .more-fields {
   border-top: 1px solid var(--hairline);
   padding-top: 12px;
+}
+
+.parallel-btn {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.parallel-notice {
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 550;
+  border-radius: var(--radius-m);
+  padding: 10px 14px;
+  margin-bottom: 14px;
 }
 
 .form-error {
@@ -890,6 +911,23 @@ dialog.sheet::backdrop {
   padding: 8px 10px;
   border-bottom: 1px solid var(--hairline);
   white-space: nowrap;
+}
+
+/* Category names may wrap — keeps the table inside an iPhone-width screen. */
+.numbers-table tbody th,
+.numbers-table tfoot th {
+  white-space: normal;
+}
+
+@media (max-width: 420px) {
+  .numbers-table {
+    font-size: 0.8rem;
+  }
+
+  .numbers-table th,
+  .numbers-table td {
+    padding: 8px 6px;
+  }
 }
 
 .numbers-table thead th {

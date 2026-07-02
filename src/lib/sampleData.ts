@@ -13,13 +13,18 @@ type Block = [number, number, BuiltinCategoryKey, number?, number?];
 const WEEKDAY: Block[] = [
   [0, 6 * 60 + 30, 'sleep'],
   [6 * 60 + 30, 7 * 60 + 15, 'personal', 0, 3],
-  [7 * 60 + 15, 8 * 60, 'chores', -1, 3],
+  [7 * 60 + 15, 7 * 60 + 45, 'meals', 1, 4],
+  [7 * 60 + 45, 8 * 60, 'chores', -1, 3],
   [8 * 60, 12 * 60, 'work', -1, 3],
+  // Lunch together with colleagues — meals and social overlap on purpose,
+  // to show that parallel activities are supported.
+  [12 * 60, 12 * 60 + 45, 'meals', 1, 4],
   [12 * 60, 12 * 60 + 45, 'social', 1, 4],
   [12 * 60 + 45, 16 * 60 + 30, 'work', -2, 3],
   [17 * 60, 18 * 60, 'physical', 2, 4],
-  [18 * 60, 19 * 60, 'chores', 0, 3],
-  [19 * 60, 21 * 60 + 30, 'leisure', 1, 4],
+  [18 * 60, 18 * 60 + 45, 'chores', 0, 3],
+  [18 * 60 + 45, 19 * 60 + 15, 'meals', 1, 4],
+  [19 * 60 + 15, 21 * 60 + 30, 'leisure', 1, 4],
   [21 * 60 + 30, 22 * 60 + 30, 'personal', 1, 4],
   [22 * 60 + 30, 24 * 60, 'sleep'],
 ];
@@ -27,11 +32,14 @@ const WEEKDAY: Block[] = [
 const WEEKEND: Block[] = [
   [0, 8 * 60 + 30, 'sleep'],
   [8 * 60 + 30, 9 * 60 + 30, 'personal', 1, 4],
-  [9 * 60 + 30, 11 * 60, 'chores', 0, 3],
+  [9 * 60 + 30, 10 * 60 + 15, 'meals', 1, 4],
+  [10 * 60 + 15, 11 * 60, 'chores', 0, 3],
   [11 * 60, 14 * 60, 'social', 2, 5],
   [14 * 60, 15 * 60, 'other', 0, 3],
   [15 * 60, 16 * 60 + 30, 'physical', 1, 4],
   [16 * 60 + 30, 19 * 60, 'leisure', 1, 4],
+  // Dinner in front of the TV — another parallel-activity example.
+  [18 * 60, 19 * 60, 'meals', 1, 4],
   [19 * 60, 20 * 60, 'social', 1, 5],
   [20 * 60, 23 * 60, 'leisure', 0, 4],
   [23 * 60, 24 * 60, 'sleep'],

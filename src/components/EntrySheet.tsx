@@ -9,7 +9,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n';
 import { db } from '../lib/db';
-import { categoryName } from '../lib/categoryName';
+import { categoryName, categoryQuickLabels } from '../lib/categoryName';
 import { swatchColor } from '../lib/palette';
 import { resolveTheme, useSettings } from '../lib/settings';
 import { minutesToHHMM, parseHHMM, splitOverMidnight } from '../lib/time';
@@ -41,9 +41,11 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
   const mode = resolveTheme(settings.theme);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const editing = draft.entry;
+  // Kept in state (not read from the prop) so "at the same time I also…"
+  // can save the current entry and switch the sheet to a fresh one.
+  const [editing, setEditing] = useState(draft.entry);
   const [categoryId, setCategoryId] = useState<number | null>(
-    editing?.categoryId ?? null,
+    draft.entry?.categoryId ?? null,
   );
   const [start, setStart] = useState(minutesToHHMM(draft.startMin));
   const [end, setEnd] = useState(minutesToHHMM(draft.endMin === 1440 ? 1439 : draft.endMin));
@@ -52,9 +54,14 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
   const [mood, setMood] = useState<MoodRating | undefined>(editing?.mood);
   const [note, setNote] = useState(editing?.note ?? '');
   const [showMore, setShowMore] = useState(
-    editing != null && (editing.energy != null || editing.mood != null || !!editing.note),
+    draft.entry != null &&
+      (draft.entry.energy != null || draft.entry.mood != null || !!draft.entry.note),
   );
   const [error, setError] = useState<string | null>(null);
+  const [parallelNotice, setParallelNotice] = useState(false);
+
+  const selectedCategory = categories.find((c) => c.id === categoryId);
+  const quickLabels = selectedCategory ? categoryQuickLabels(selectedCategory, t) : [];
 
   useEffect(() => {
     dialogRef.current?.showModal();
@@ -65,11 +72,11 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
   const crossesMidnight =
     startMin != null && endMin != null && endMin <= startMin && endMin > 0;
 
-  const save = async () => {
-    if (categoryId == null) return;
-    if (startMin == null || endMin == null) {
+  const saveEntry = async (): Promise<boolean> => {
+    if (categoryId == null) return false;
+    if (startMin == null || endMin == null || endMin === startMin) {
       setError(t('entry.timeError'));
-      return;
+      return false;
     }
     const extras = {
       categoryId,
@@ -78,17 +85,40 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
       mood,
       note: note.trim() || undefined,
     };
-    const endForSplit = endMin === startMin ? startMin : endMin; // zero-length guard below
-    if (endMin === startMin) {
-      setError(t('entry.timeError'));
-      return;
-    }
-    const pieces = splitOverMidnight(draft.date, startMin, endForSplit);
+    const pieces = splitOverMidnight(draft.date, startMin, endMin);
     await db.transaction('rw', db.entries, async () => {
       if (editing?.id != null) await db.entries.delete(editing.id);
       await db.entries.bulkAdd(pieces.map((p) => ({ ...p, ...extras })));
     });
-    onClose();
+    return true;
+  };
+
+  const save = async () => {
+    if (await saveEntry()) onClose();
+  };
+
+  /**
+   * Save the current entry, then reset the sheet to a new entry on the same
+   * time range — the quick path for registering overlapping activities
+   * ("watching TV while working", "audiobook while cooking", …).
+   */
+  const saveAndAddParallel = async () => {
+    if (!(await saveEntry())) return;
+    setEditing(undefined);
+    setCategoryId(null);
+    setLabel('');
+    setEnergy(undefined);
+    setMood(undefined);
+    setNote('');
+    setShowMore(false);
+    setError(null);
+    setParallelNotice(true);
+  };
+
+  /** Switching category clears a label that was one of the old quick picks. */
+  const pickCategory = (cat: Category) => {
+    if (cat.id !== categoryId && quickLabels.includes(label)) setLabel('');
+    setCategoryId(cat.id!);
   };
 
   const remove = async () => {
@@ -113,6 +143,12 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
         </button>
       </div>
 
+      {parallelNotice && (
+        <p className="parallel-notice" role="status">
+          {t('entry.parallelSaved')}
+        </p>
+      )}
+
       <fieldset className="chip-group" aria-required>
         <legend>{t('entry.category')}</legend>
         <div className="chip-grid">
@@ -126,7 +162,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
                 type="radio"
                 name="category"
                 checked={categoryId === cat.id}
-                onChange={() => setCategoryId(cat.id!)}
+                onChange={() => pickCategory(cat)}
               />
               <span>
                 <span aria-hidden>{cat.icon}</span> {categoryName(cat, t)}
@@ -135,6 +171,26 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
           ))}
         </div>
       </fieldset>
+
+      {quickLabels.length > 0 && (
+        <fieldset className="chip-group">
+          <legend>{t('entry.quick')}</legend>
+          <div className="chip-row">
+            {quickLabels.map((q) => (
+              <label key={q} className="chip">
+                <input
+                  type="radio"
+                  name="quick-label"
+                  checked={label === q}
+                  onChange={() => setLabel(q)}
+                  onClick={() => label === q && setLabel('')}
+                />
+                <span>{q}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
 
       <div className="time-row">
         <div className="field">
@@ -161,6 +217,15 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
           onChange={(e) => setLabel(e.target.value)}
         />
       </div>
+
+      <button
+        type="button"
+        className="btn btn-ghost parallel-btn"
+        disabled={categoryId == null}
+        onClick={saveAndAddParallel}
+      >
+        ⧉ {t('entry.parallel')}
+      </button>
 
       <button
         type="button"

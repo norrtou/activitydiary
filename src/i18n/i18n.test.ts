@@ -26,4 +26,20 @@ describe('i18n dictionaries', () => {
       expect(placeholders(sv[key]), key).toEqual(placeholders(en[key]));
     }
   });
+
+  it('quick-pick lists are parallel, non-empty and unique in both languages', () => {
+    const quickKeys = (Object.keys(en) as (keyof typeof en)[]).filter((k) =>
+      k.startsWith('quick.'),
+    );
+    expect(quickKeys.length).toBeGreaterThan(0);
+    for (const key of quickKeys) {
+      const enList = en[key].split('|');
+      const svList = sv[key].split('|');
+      expect(svList.length, key).toBe(enList.length);
+      for (const list of [enList, svList]) {
+        expect(list.every((item) => item.trim() === item && item.length > 0), key).toBe(true);
+        expect(new Set(list).size, key).toBe(list.length);
+      }
+    }
+  });
 });

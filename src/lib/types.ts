@@ -51,6 +51,12 @@ export interface Category {
   swatchId: string;
   /** Emoji shown next to the category name. */
   icon: string;
+  /**
+   * One-tap name suggestions shown when registering (e.g. Breakfast, Lunch).
+   * Unset on a built-in category = use the translated defaults from i18n;
+   * an empty array = the user removed them all.
+   */
+  quickLabels?: string[];
   sortOrder: number;
   /** 1 = hidden from pickers but kept so old entries still resolve. */
   archived?: 0 | 1;
@@ -59,6 +65,7 @@ export interface Category {
 export type BuiltinCategoryKey =
   | 'sleep'
   | 'personal'
+  | 'meals'
   | 'work'
   | 'chores'
   | 'social'

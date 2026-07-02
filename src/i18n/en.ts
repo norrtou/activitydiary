@@ -50,6 +50,9 @@ export const en = {
   'entry.end': 'Ends',
   'entry.label': 'Name ({optional})',
   'entry.labelPlaceholder': 'e.g. Lunch with Anna',
+  'entry.quick': 'Quick pick',
+  'entry.parallel': 'At the same time I also…',
+  'entry.parallelSaved': 'Saved! What else were you doing at the same time?',
   'entry.more': 'More details',
   'entry.energy': 'Energy',
   'entry.energyHint': 'Did the activity drain or give you energy?',
@@ -73,12 +76,25 @@ export const en = {
   // Categories (built-in)
   'cat.sleep': 'Sleep & rest',
   'cat.personal': 'Personal care',
+  'cat.meals': 'Food & drink',
   'cat.work': 'Work & study',
   'cat.chores': 'Household',
   'cat.social': 'Social',
   'cat.physical': 'Exercise & movement',
   'cat.leisure': 'Leisure & fun',
   'cat.other': 'Other',
+
+  // Default quick-pick labels per built-in category ('|'-separated lists;
+  // both languages must keep the same number of items).
+  'quick.sleep': 'Night sleep|Nap|Rest',
+  'quick.personal': 'Shower|Hygiene|Getting dressed|Medication',
+  'quick.meals': 'Breakfast|Lunch|Dinner|Supper|Snack|Coffee break',
+  'quick.work': 'Work|Studies|Meeting|Errands',
+  'quick.chores': 'Cooking|Cleaning|Laundry|Dishes|Groceries',
+  'quick.social': 'Time together|Phone call|Visit|Video call',
+  'quick.physical': 'Walk|Workout|Cycling|Stretching',
+  'quick.leisure': 'TV & film|Reading|Music|Games|Audiobook|Creating',
+  'quick.other': 'Waiting|Travel|Healthcare visit',
 
   // Week view
   'week.title': 'Week {num}',
@@ -97,7 +113,8 @@ export const en = {
   'insights.balance': 'Activity balance',
   'insights.balanceHint': 'Share of registered time per category',
   'insights.clock': 'Activity clock',
-  'insights.clockHint': 'An average day around the clock',
+  'insights.clockHint':
+    'Your most common activity at each hour of the day — midnight at the top, noon at the bottom. A pale color means only part of the time.',
   'insights.perDay': 'Day by day',
   'insights.perDayHint': 'Hours per category, each day',
   'insights.energy': 'Energy balance',
@@ -160,6 +177,8 @@ export const en = {
   'settings.categoryName': 'Name',
   'settings.categoryColor': 'Color',
   'settings.categoryIcon': 'Icon',
+  'settings.quickLabels': 'Quick picks ({optional})',
+  'settings.quickLabelsHint': 'One-tap name suggestions when registering. Separate with commas.',
   'settings.archive': 'Hide',
   'settings.unarchive': 'Show again',
   'settings.archivedHint': 'Hidden categories keep their old entries but no longer appear when you register.',
