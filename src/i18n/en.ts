@@ -194,7 +194,7 @@ export const en = {
   'report.avgEnergy': 'Energy (avg, −2 to +2)',
   'report.avgMood': 'Mood (avg)',
   'report.options': 'Design your report',
-  'report.onePage': 'Everything fits on one A4 page — the sheet below is exactly what prints.',
+  'report.onePage': 'Everything fits on one landscape A4 page — what you see below is exactly what prints.',
   'report.modules': 'Include',
   'report.style.donut': 'Donut chart',
   'report.style.bars': 'Bars',

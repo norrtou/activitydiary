@@ -967,8 +967,22 @@ dialog.sheet::backdrop {
 }
 
 .report-sheet .xp-grid {
+  /* minmax(0, …): the charts must split the module exactly in half —
+     a plain 1fr would let long category names push past the page edge. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px 24px;
   margin-top: 4px;
+}
+
+/* In the narrow sheet columns the axis captions get the full row width
+   instead of the track column, so they stay on one line each. */
+.report-sheet .xp-row:has(.xp-axis) {
+  grid-template-columns: 0 1fr 0;
+  gap: 0;
+}
+
+.report-sheet .xp-axis {
+  white-space: nowrap;
 }
 
 .report-sheet .xp-title {
@@ -1393,9 +1407,9 @@ dialog.sheet::backdrop {
   text-decoration: underline;
 }
 
-/* ---------- Report: A4 sheet, on screen and in print ----------
+/* ---------- PDF page: landscape A4, on screen and in print ----------
 
-   The sheet is a fixed 210×296mm surface — the preview on screen IS the
+   A fixed 296×209mm landscape surface — the preview on screen IS the
    printed page. Light scaffolding only: thin rules, muted labels, small
    color marks. No heavy fills, so it prints crisp and ink-friendly. */
 
@@ -1406,7 +1420,7 @@ dialog.sheet::backdrop {
 }
 
 .report-toolbar {
-  max-width: calc(210mm + 32px);
+  max-width: calc(296mm + 32px);
   margin: 0 auto 14px;
   display: flex;
   flex-direction: column;
@@ -1452,8 +1466,8 @@ dialog.sheet::backdrop {
   --rep-hairline: #ccd9e4;
   --rep-soft: #eef3f8;
 
-  width: 210mm;
-  height: 296mm;
+  width: 296mm;
+  height: 209mm;
   overflow: hidden;
   margin: 0 auto;
   background: #ffffff;
@@ -1539,7 +1553,7 @@ dialog.sheet::backdrop {
 
 .report-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px 20px;
   align-content: start;
   flex: 1;
@@ -1555,6 +1569,12 @@ dialog.sheet::backdrop {
 
 .report-module-wide {
   grid-column: 1 / -1;
+}
+
+/* The experience module gets two of the four columns: energy and mood
+   bars sit side by side, keeping the row short enough for one page. */
+.report-module-xp {
+  grid-column: span 2;
 }
 
 .report-module h3 {
@@ -1685,7 +1705,7 @@ dialog.sheet::backdrop {
 }
 
 @page {
-  size: a4;
+  size: a4 landscape;
   margin: 0;
 }
 

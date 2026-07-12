@@ -180,7 +180,7 @@ export const sv: Record<MessageKey, string> = {
   'report.avgEnergy': 'Energi (snitt, −2 till +2)',
   'report.avgMood': 'Mående (snitt)',
   'report.options': 'Utforma din rapport',
-  'report.onePage': 'Allt ryms på en A4-sida — arket nedanför är exakt det som skrivs ut.',
+  'report.onePage': 'Allt ryms på en liggande A4-sida — det du ser nedanför är exakt det som skrivs ut.',
   'report.modules': 'Ta med',
   'report.style.donut': 'Cirkeldiagram',
   'report.style.bars': 'Staplar',

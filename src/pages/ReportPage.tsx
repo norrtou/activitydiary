@@ -1,7 +1,7 @@
 /**
- * One-page visual activity report.
+ * The PDF page: a one-page visual summary for printing.
  *
- * The report is a fixed A4 sheet: what you see on screen is exactly what the
+ * A fixed landscape A4 surface: what you see on screen is exactly what the
  * browser's print dialog ("Save as PDF") produces — a single page, primarily
  * visual. A toolbar (hidden in print) lets the user compose the page: how the
  * balance is drawn (donut or bars), and whether to include the activity
@@ -329,28 +329,8 @@ export function ReportPage() {
               </section>
             )}
 
-            {showLegend && (
-              <div className="report-module report-module-wide">
-                <ChartLegend categories={usedCategories} />
-              </div>
-            )}
-
-            {options.perDay && (
-              <section className="report-module report-module-wide">
-                <h3>{t('insights.perDay')}</h3>
-                <p className="report-module-hint">{t('insights.perDayHint')}</p>
-                <DailyStacked
-                  days={days}
-                  perDay={perDayCategoryMinutes(entries, days)}
-                  categories={categories}
-                  monthly={!isWeek}
-                  height={140}
-                />
-              </section>
-            )}
-
             {showExperience && (
-              <section className="report-module report-module-wide">
+              <section className="report-module report-module-xp">
                 <h3>{t('insights.experience')}</h3>
                 <p className="report-module-hint">{t('insights.experienceHint')}</p>
                 <div className="xp-grid">
@@ -382,6 +362,26 @@ export function ReportPage() {
                     </div>
                   )}
                 </div>
+              </section>
+            )}
+
+            {showLegend && (
+              <div className="report-module report-module-wide">
+                <ChartLegend categories={usedCategories} />
+              </div>
+            )}
+
+            {options.perDay && (
+              <section className="report-module report-module-wide">
+                <h3>{t('insights.perDay')}</h3>
+                <p className="report-module-hint">{t('insights.perDayHint')}</p>
+                <DailyStacked
+                  days={days}
+                  perDay={perDayCategoryMinutes(entries, days)}
+                  categories={categories}
+                  monthly={!isWeek}
+                  height={140}
+                />
               </section>
             )}
 
