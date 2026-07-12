@@ -27,6 +27,7 @@ export const sv: Record<MessageKey, string> = {
   'nav.insights': 'Översikt',
   'nav.export': 'Exportera',
   'nav.settings': 'Inställningar',
+  'nav.home': 'Framsidan',
   'nav.main': 'Huvudmeny',
 
   'today.previousDay': 'Föregående dag',

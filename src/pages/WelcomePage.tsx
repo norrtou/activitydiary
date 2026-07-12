@@ -93,6 +93,14 @@ export function WelcomePage() {
         <p>{t('welcome.ot.text')}</p>
       </section>
 
+      <section className="welcome-more">
+        <h2>{t('settings.moreTitle')}</h2>
+        <a className="project-link" href="https://anatomiquiz.se" target="_blank" rel="noopener">
+          <span className="project-link-name">Anatomiquiz</span>
+          <span className="project-link-desc">{t('settings.anatomiquizText')}</span>
+        </a>
+      </section>
+
       <p className="muted welcome-footer">{t('welcome.footer')}</p>
     </main>
   );

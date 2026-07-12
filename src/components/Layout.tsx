@@ -5,7 +5,7 @@
  */
 import { NavLink, Outlet } from 'react-router-dom';
 import { useT } from '../i18n';
-import { IconExport, IconInsights, IconSettings, IconToday, IconWeek } from './icons';
+import { IconExport, IconHome, IconInsights, IconSettings, IconToday, IconWeek } from './icons';
 
 const logoMarkUrl = `${import.meta.env.BASE_URL}adlogo-mark.webp`;
 
@@ -13,6 +13,7 @@ export function Layout() {
   const t = useT();
 
   const items = [
+    { to: '/', label: t('nav.home'), icon: <IconHome /> },
     { to: '/today', label: t('nav.today'), icon: <IconToday /> },
     { to: '/week', label: t('nav.week'), icon: <IconWeek /> },
     { to: '/insights', label: t('nav.insights'), icon: <IconInsights /> },
@@ -35,6 +36,7 @@ export function Layout() {
             <li key={item.to}>
               <NavLink
                 to={item.to}
+                end={item.to === '/'}
                 className={({ isActive }) => (isActive ? 'active' : undefined)}
               >
                 {item.icon}

@@ -31,6 +31,7 @@ export const en = {
   'nav.insights': 'Insights',
   'nav.export': 'Export',
   'nav.settings': 'Settings',
+  'nav.home': 'Home',
   'nav.main': 'Main navigation',
 
   // Today view

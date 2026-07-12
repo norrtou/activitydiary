@@ -18,6 +18,14 @@ function base(props: SVGProps<SVGSVGElement>) {
   } as const;
 }
 
+export function IconHome(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 10.5 12 3.5l8 7V20a1 1 0 0 1-1 1h-4.6v-6.2h-4.8V21H5a1 1 0 0 1-1-1v-9.5Z" />
+    </svg>
+  );
+}
+
 export function IconToday(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
