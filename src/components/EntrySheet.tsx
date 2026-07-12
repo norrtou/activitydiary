@@ -115,8 +115,13 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
     setParallelFrom(savedName);
     // The button sits far down the sheet — without this the switch to a new
     // entry is invisible on a phone. Show the new title/banner and announce it.
-    headingRef.current?.focus({ preventScroll: true });
-    dialogRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    // After the re-render, jump to the top of the sheet — the jump plus the
+    // new title/banner IS the mode switch. Instant two-argument scrollTo:
+    // supported by every phone browser, cannot be interrupted mid-animation.
+    requestAnimationFrame(() => {
+      headingRef.current?.focus({ preventScroll: true });
+      dialogRef.current?.scrollTo(0, 0);
+    });
   };
 
   /** Switching category clears a label that was one of the old quick picks. */
