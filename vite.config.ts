@@ -11,7 +11,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'apple-touch-icon.png', 'adlogo.webp', 'adlogo-mark.webp'],
       manifest: {
         name: 'Activity Diary – Aktivitetsdagboken',
         short_name: 'Activity Diary',

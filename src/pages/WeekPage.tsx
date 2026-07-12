@@ -87,7 +87,7 @@ export function WeekPage() {
           {days.map((day) => (
             <Link
               key={day}
-              to={day === today ? '/' : `/day/${day}`}
+              to={day === today ? '/today' : `/day/${day}`}
               className={`week-day${day === today ? ' is-today' : ''}`}
               aria-label={t('week.openDay', { date: formatShortDate(day, locale) })}
             >

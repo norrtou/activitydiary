@@ -2,19 +2,19 @@
 <html lang="sv">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#2d5456" />
 
-    <title>Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapi | Activity Diary for occupational therapy</title>
+    <title>Aktivitetsdagboken – digital aktivitetsdagbok och aktivitetskartläggning för arbetsterapeuter | Activity Diary for occupational therapists</title>
     <meta
       name="description"
-      content="Kostnadsfri digital aktivitetsdagbok för arbetsterapi: registrera vardagens aktiviteter, skatta energi och mående, se aktivitetsbalansen i tydliga diagram och skriv ut en PDF-rapport. All data stannar på din enhet. / Free digital activity diary for occupational therapy: log daily activities, rate energy and mood, see your occupational balance in clear charts and print a one-page PDF report."
+      content="Kostnadsfritt digitalt verktyg för arbetsterapeuter: ge klienten en aktivitetsdagbok istället för pappersmall. Dygnsregistrering med energi- och måendeskattning per aktivitet, tydliga diagram över aktivitetsbalans och obalans, samt en ensidig PDF-rapport för journal och uppföljning. Inget konto — all data stannar hos klienten. / Free digital tool for occupational therapists: a client activity diary with 24-hour registration, energy and mood ratings per activity, clear occupational-balance charts and a one-page PDF report."
     />
     <meta
       name="keywords"
-      content="aktivitetsdagbok, arbetsterapi, arbetsterapeut, aktivitetsbalans, aktivitetskartläggning, energikartläggning, mående, vardagsstruktur, dygnsrytm, tidsdagbok, activity diary, occupational therapy, occupational balance, time-use diary, energy mapping, mood tracking, activity log, PDF report"
+      content="aktivitetsdagbok, aktivitetsdagbok mall, aktivitetsdagbok pdf, arbetsterapi, arbetsterapeut, verktyg för arbetsterapeuter, aktivitetsbalans, aktivitetsobalans, aktivitetskartläggning, kartläggning av vardagen, dygnsregistrering, tidsanvändning, tidsdagbok, energikartläggning, energi och mående, uppföljning, occupational therapy, occupational therapist tools, activity diary, activity log template, occupational balance, time-use diary, energy mapping"
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://norrtou.github.io/activitydiary/" />
@@ -22,18 +22,20 @@
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aktivitetsdagboken / Activity Diary" />
-    <meta property="og:title" content="Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapi" />
+    <meta property="og:title" content="Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapeuter" />
     <meta
       property="og:description"
-      content="Registrera vardagens aktiviteter, skatta energi och mående och se aktivitetsbalansen i tydliga diagram. Privat: all data stannar på din enhet. / Log daily activities, rate energy and mood, and see your occupational balance in clear charts."
+      content="Ge klienten en digital aktivitetsdagbok istället för pappersmall: dygnsregistrering, energi och mående per aktivitet, tydliga diagram över aktivitetsbalansen och en ensidig PDF-rapport. Kostnadsfritt och utan konto."
     />
     <meta property="og:url" content="https://norrtou.github.io/activitydiary/" />
-    <meta property="og:image" content="https://norrtou.github.io/activitydiary/pwa-512.png" />
-    <meta property="og:image:alt" content="Aktivitetsdagbokens appikon" />
+    <meta property="og:image" content="https://norrtou.github.io/activitydiary/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Aktivitetsdagbokens logotyp: bokstäverna AD och namnet Activity Diary" />
     <meta property="og:locale" content="sv_SE" />
     <meta property="og:locale:alternate" content="en_GB" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:image" content="https://norrtou.github.io/activitydiary/pwa-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://norrtou.github.io/activitydiary/og-image.png" />
 
     <!-- Structured data for search engines and AI agents -->
     <script type="application/ld+json">
@@ -43,6 +45,8 @@
         "name": "Aktivitetsdagboken",
         "alternateName": "Activity Diary",
         "url": "https://norrtou.github.io/activitydiary/",
+        "image": "https://norrtou.github.io/activitydiary/og-image.png",
+        "logo": "https://norrtou.github.io/activitydiary/adlogo-mark.webp",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Any (web browser)",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -51,8 +55,8 @@
           "@type": "Audience",
           "audienceType": "Occupational therapists and their clients / Arbetsterapeuter och deras klienter"
         },
-        "description": "Kostnadsfri, privat aktivitetsdagbok för arbetsterapi: registrera vardagens aktiviteter, skatta energi och mående per aktivitet och se aktivitetsbalansen i tydliga diagram. All data lagras lokalt på enheten. / A free, private activity diary for occupational therapy: log everyday activities, rate energy and mood per activity, and see occupational balance in clear charts. All data is stored locally on the device.",
-        "keywords": "aktivitetsdagbok, arbetsterapi, aktivitetsbalans, occupational therapy, occupational balance, activity diary, time use, energy, mood",
+        "description": "Kostnadsfritt digitalt verktyg för arbetsterapeuter: en aktivitetsdagbok klienten fyller i själv — dygnsregistrering med energi- och måendeskattning per aktivitet, tydliga diagram över aktivitetsbalans och en ensidig PDF-rapport för journal och uppföljning. All data lagras lokalt på klientens enhet. / A free digital tool for occupational therapists: a self-completed client activity diary with 24-hour registration, energy and mood ratings per activity, clear occupational-balance charts and a one-page PDF report. All data is stored locally on the client's device.",
+        "keywords": "aktivitetsdagbok, aktivitetsdagbok mall, arbetsterapi, arbetsterapeut, aktivitetsbalans, aktivitetskartläggning, dygnsregistrering, occupational therapy, occupational therapist tools, occupational balance, activity diary, time-use diary, energy mapping",
         "featureList": [
           "Visual 24-hour day timeline for registering activities",
           "Week overview",
@@ -71,20 +75,36 @@
          Keeps the key facts readable for search engines that don't run JS. -->
     <div id="root">
       <div class="boot">
-        <h1>Aktivitetsdagboken · Activity Diary</h1>
+        <img
+          class="boot-logo"
+          src="/adlogo.webp"
+          alt="Aktivitetsdagbokens logotyp: bokstäverna AD och namnet Activity Diary"
+          width="360"
+          height="256"
+        />
+        <h1>Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapeuter</h1>
         <p>
-          Kostnadsfri digital aktivitetsdagbok för arbetsterapi. Registrera vardagens aktiviteter —
-          sömn, arbete, hushåll, socialt, träning och fritid — skatta energi och mående, och se din
-          aktivitetsbalans i tydliga diagram: hur tiden fördelas, hur ett dygn ser ut och vilka
-          aktiviteter som ger eller tar energi. Skriv ut en snygg rapport som PDF att ta med till
-          din arbetsterapeut. All data stannar på din enhet.
+          Ett kostnadsfritt digitalt verktyg för arbetsterapeuter och deras klienter — ett
+          alternativ till aktivitetsdagbok som pappersmall. Klienten registrerar vardagens
+          aktiviteter dygnet runt — sömn, arbete, hushåll, socialt, träning och fritid — och
+          skattar energi och mående för varje aktivitet. Resultatet blir en tydlig
+          aktivitetskartläggning: hur tiden fördelas, hur ett dygn ser ut och vilka aktiviteter
+          som ger respektive tar energi, så att aktivitetsbalans och obalans syns direkt. En
+          ensidig, utskriftsvänlig PDF-rapport passar för journal, uppföljning och samtal.
+          Inget konto behövs och all data stannar på klientens enhet.
         </p>
         <p lang="en">
-          Free digital activity diary for occupational therapy. Log everyday activities — sleep,
-          work, chores, social life, exercise and leisure — rate energy and mood, and see your
-          occupational balance in clear charts: how your time is divided, what a day looks like and
-          which activities give or take energy. Print a clean one-page PDF report to bring to your
-          occupational therapist. All data stays on your device.
+          A free digital tool for occupational therapists and their clients — an alternative to
+          paper activity-diary templates. The client logs everyday activities around the clock and
+          rates energy and mood for each activity. The result is a clear time-use map: how time is
+          divided, what a day looks like and which activities give or take energy, so occupational
+          balance and imbalance are visible at a glance. A one-page printable PDF report suits
+          records, follow-up and conversations. No account needed; all data stays on the client's
+          device.
+        </p>
+        <p>
+          Av samma skapare: <a href="https://anatomiquiz.se">Anatomiquiz</a> — kostnadsfritt
+          interaktivt quiz i anatomi och medicinsk terminologi för vårdstudenter.
         </p>
         <p class="boot-loading" aria-hidden="true">Laddar … / Loading …</p>
       </div>

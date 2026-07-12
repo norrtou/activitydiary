@@ -36,7 +36,7 @@ export function TodayPage() {
 
   const [draft, setDraft] = useState<SheetDraft | null>(null);
 
-  const goTo = (key: string) => navigate(key === toDateKey() ? '/' : `/day/${key}`);
+  const goTo = (key: string) => navigate(key === toDateKey() ? '/today' : `/day/${key}`);
 
   const registeredMin = useMemo(
     () => entries.reduce((sum, e) => sum + (e.endMin - e.startMin), 0),

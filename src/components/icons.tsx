@@ -87,16 +87,6 @@ export function IconChevronRight(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** App mark: a clock face — time is the diary's raw material. */
-export function IconLogo(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...base(props)}>
-      <circle cx="12" cy="12" r="8.5" />
-      <path d="M12 7.5V12l3 2.2" />
-    </svg>
-  );
-}
-
 export function IconFileText(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

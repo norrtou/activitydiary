@@ -9,6 +9,7 @@
 export const en = {
   'app.name': 'Activity Diary',
   'app.tagline': 'See how your days are really spent',
+  'app.logoAlt': 'Activity Diary logo – the letters AD',
 
   // Common actions
   'common.save': 'Save',
@@ -99,17 +100,21 @@ export const en = {
 
   // Welcome / start page
   'welcome.lead':
-    'A digital activity diary made for occupational therapy — for you who want to understand how your days are actually spent, and for occupational therapists who need a clear picture of everyday life. Log activities, energy and mood, and watch the balance appear.',
+    'A free digital activity diary for occupational therapy — an alternative to the paper template. Log everyday activities around the clock, rate energy and mood, and watch the occupational balance emerge in clear charts.',
   'welcome.cta': 'Get started',
+  'welcome.open': 'Open the diary',
   'welcome.featuresLabel': 'What the app offers',
-  'welcome.f1.title': 'Log your day',
-  'welcome.f1.text': 'Add activities on a visual timeline — quick picks make everyday logging effortless.',
-  'welcome.f2.title': 'See the balance',
-  'welcome.f2.text': 'Charts and numbers show how sleep, work, leisure and rest relate over a week or month.',
-  'welcome.f3.title': 'Share as a report',
-  'welcome.f3.text': 'Export a clean, printable PDF report — ready to bring to an appointment.',
+  'welcome.f1.title': 'Log the whole day',
+  'welcome.f1.text': 'Add activities on a visual 24-hour timeline — quick picks make everyday logging effortless.',
+  'welcome.f2.title': 'See the occupational balance',
+  'welcome.f2.text': 'Charts show how time is divided between sleep, work, leisure and rest — and which activities give or take energy.',
+  'welcome.f3.title': 'A report for follow-up',
+  'welcome.f3.text': 'Export a clean one-page printable PDF report — ready for records, follow-up or the next appointment.',
   'welcome.f4.title': 'Private by design',
-  'welcome.f4.text': 'Everything stays on your device. No account, no tracking, works offline.',
+  'welcome.f4.text': 'Everything stays on the device. No account, no tracking, works offline — safe for client data too.',
+  'welcome.ot.title': 'For occupational therapists',
+  'welcome.ot.text':
+    'Activity Diary was built as a free digital alternative to paper activity-diary templates — for time-use mapping with 24-hour registration of everyday life. Give your client the link; no account is needed. The client logs a week or a longer period and brings the one-page report to the follow-up, or shares the whole diary as a file. All data stays on the client’s device.',
   'welcome.footer': 'Free to use · In English and Swedish · Works offline',
 
   // Week view
@@ -232,6 +237,9 @@ export const en = {
   'settings.sampleConfirm': 'Add a week of example activities?',
   'settings.about': 'About',
   'settings.aboutText': 'Activity Diary is a free tool for tracking everyday activities and seeing the balance between sleep, work, play and everything in between. Your data never leaves your device.',
+  'settings.moreTitle': 'More from the same maker',
+  'settings.anatomiquizText':
+    'A free interactive quiz on anatomy and medical terminology (in Swedish) — for healthcare students.',
   'settings.showWelcome': 'Show the welcome page',
 
   // Accessibility labels

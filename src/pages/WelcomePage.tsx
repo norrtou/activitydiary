@@ -1,30 +1,33 @@
 /**
- * Welcome / start page — the first thing a new visitor meets.
- * Explains what the app is for and who it is for (occupational therapy),
- * lets the visitor pick language right away, and leads into the diary.
- * Rendered outside the app chrome; "Get started" marks it as seen so the
- * everyday flow goes straight to Today.
+ * Welcome / start page — rendered at the root, so it is the page every
+ * visitor is met by. Explains what the app is for and who it is for
+ * (occupational therapy), lets the visitor pick language right away, and
+ * leads into the diary at /today. Returning visitors get a single
+ * "Open the diary" button instead of the first-time actions.
  */
 import { useNavigate } from 'react-router-dom';
 import { useI18n } from '../i18n';
-import { markWelcomeSeen } from '../lib/settings';
+import { hasSeenWelcome, markWelcomeSeen } from '../lib/settings';
 import { loadSampleWeek } from '../lib/sampleData';
-import { IconExport, IconInsights, IconLock, IconLogo, IconToday } from '../components/icons';
+import { IconExport, IconInsights, IconLock, IconToday } from '../components/icons';
+
+const logoMarkUrl = `${import.meta.env.BASE_URL}adlogo-mark.webp`;
 
 export function WelcomePage() {
   const { t, lang, setLang } = useI18n();
   const navigate = useNavigate();
+  const returning = hasSeenWelcome();
 
   const start = () => {
     markWelcomeSeen();
-    navigate('/');
+    navigate('/today');
   };
 
   const startWithSample = async () => {
     if (!window.confirm(t('settings.sampleConfirm'))) return;
     await loadSampleWeek();
     markWelcomeSeen();
-    navigate('/');
+    navigate('/today');
   };
 
   const features = [
@@ -51,19 +54,25 @@ export function WelcomePage() {
       </fieldset>
 
       <header className="welcome-hero">
-        <div className="welcome-logo" aria-hidden>
-          <IconLogo />
+        <div className="welcome-logo">
+          <img src={logoMarkUrl} alt={t('app.logoAlt')} width={640} height={388} />
         </div>
         <h1>{t('app.name')}</h1>
         <p className="welcome-tagline">{t('app.tagline')}</p>
         <p className="welcome-lead">{t('welcome.lead')}</p>
         <div className="welcome-cta">
           <button type="button" className="btn btn-primary btn-lg" onClick={start}>
-            {t('welcome.cta')}
+            {returning ? t('welcome.open') : t('welcome.cta')}
           </button>
-          <button type="button" className="btn btn-ghost btn-lg" onClick={() => void startWithSample()}>
-            {t('settings.sample')}
-          </button>
+          {!returning && (
+            <button
+              type="button"
+              className="btn btn-ghost btn-lg"
+              onClick={() => void startWithSample()}
+            >
+              {t('settings.sample')}
+            </button>
+          )}
         </div>
       </header>
 
@@ -77,6 +86,11 @@ export function WelcomePage() {
             <p>{f.text}</p>
           </div>
         ))}
+      </section>
+
+      <section className="card welcome-ot">
+        <h2>{t('welcome.ot.title')}</h2>
+        <p>{t('welcome.ot.text')}</p>
       </section>
 
       <p className="muted welcome-footer">{t('welcome.footer')}</p>

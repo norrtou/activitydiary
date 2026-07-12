@@ -7,6 +7,7 @@ import type { MessageKey } from './en';
 export const sv: Record<MessageKey, string> = {
   'app.name': 'Aktivitetsdagboken',
   'app.tagline': 'Se hur dina dagar faktiskt används',
+  'app.logoAlt': 'Aktivitetsdagbokens logotyp – bokstäverna AD',
 
   'common.save': 'Spara',
   'common.cancel': 'Avbryt',
@@ -89,17 +90,21 @@ export const sv: Record<MessageKey, string> = {
   'quick.other': 'Väntan|Resa|Vårdbesök',
 
   'welcome.lead':
-    'En digital aktivitetsdagbok framtagen för arbetsterapi — för dig som vill förstå hur dina dagar faktiskt används, och för arbetsterapeuter som behöver en tydlig bild av vardagen. Registrera aktiviteter, energi och mående och se balansen träda fram.',
+    'En kostnadsfri digital aktivitetsdagbok för arbetsterapi — ett alternativ till pappersmallen. Registrera vardagens aktiviteter dygnet runt, skatta energi och mående, och se aktivitetsbalansen träda fram i tydliga diagram.',
   'welcome.cta': 'Kom igång',
+  'welcome.open': 'Öppna dagboken',
   'welcome.featuresLabel': 'Det här erbjuder appen',
-  'welcome.f1.title': 'Registrera din dag',
-  'welcome.f1.text': 'Lägg till aktiviteter på en visuell tidslinje — snabbval gör vardagsregistreringen enkel.',
-  'welcome.f2.title': 'Se balansen',
-  'welcome.f2.text': 'Diagram och siffror visar hur sömn, arbete, fritid och vila förhåller sig över en vecka eller månad.',
-  'welcome.f3.title': 'Dela som rapport',
-  'welcome.f3.text': 'Exportera en snygg, utskriftsvänlig PDF-rapport — redo att ta med till ett besök.',
+  'welcome.f1.title': 'Registrera dygnet',
+  'welcome.f1.text': 'Lägg till aktiviteter på en visuell tidslinje över hela dygnet — snabbval gör vardagsregistreringen enkel.',
+  'welcome.f2.title': 'Se aktivitetsbalansen',
+  'welcome.f2.text': 'Diagram visar hur tiden fördelas mellan sömn, arbete, fritid och vila — och vilka aktiviteter som ger eller tar energi.',
+  'welcome.f3.title': 'Rapport för uppföljning',
+  'welcome.f3.text': 'Exportera en ensidig, utskriftsvänlig PDF-rapport — redo för journal, uppföljning eller nästa besök.',
   'welcome.f4.title': 'Privat i grunden',
-  'welcome.f4.text': 'Allt stannar på din enhet. Inget konto, ingen spårning, fungerar offline.',
+  'welcome.f4.text': 'Allt stannar på enheten. Inget konto, ingen spårning, fungerar offline — tryggt även för klientdata.',
+  'welcome.ot.title': 'För dig som är arbetsterapeut',
+  'welcome.ot.text':
+    'Aktivitetsdagboken är byggd som ett kostnadsfritt digitalt alternativ till aktivitetsdagbok på pappersmall — för aktivitetskartläggning och dygnsregistrering i vardagen. Ge klienten länken; inget konto behövs. Klienten registrerar en vecka eller en längre period och tar med den ensidiga rapporten till uppföljningen, eller delar hela dagboken som fil. All data stannar på klientens enhet.',
   'welcome.footer': 'Kostnadsfri · På svenska och engelska · Fungerar offline',
 
   'week.title': 'Vecka {num}',
@@ -217,6 +222,9 @@ export const sv: Record<MessageKey, string> = {
   'settings.sampleConfirm': 'Lägga till en vecka med exempelaktiviteter?',
   'settings.about': 'Om appen',
   'settings.aboutText': 'Aktivitetsdagboken är ett kostnadsfritt verktyg för att registrera vardagens aktiviteter och se balansen mellan sömn, arbete, nöje och allt däremellan. Dina uppgifter lämnar aldrig din enhet.',
+  'settings.moreTitle': 'Mer från samma skapare',
+  'settings.anatomiquizText':
+    'Kostnadsfritt interaktivt quiz i anatomi och medicinsk terminologi — för dig som studerar till ett vårdyrke.',
   'settings.showWelcome': 'Visa startsidan',
 
   'a11y.skipToContent': 'Hoppa till innehållet',

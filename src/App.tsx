@@ -6,7 +6,6 @@
 import { lazy, Suspense } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './i18n';
-import { hasSeenWelcome } from './lib/settings';
 import { Layout } from './components/Layout';
 import { TodayPage } from './pages/TodayPage';
 import { WeekPage } from './pages/WeekPage';
@@ -22,19 +21,15 @@ const ReportPage = lazy(() =>
   import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })),
 );
 
-/** First visit lands on the welcome page; after "Get started" the index is Today. */
-function HomeGate() {
-  if (!hasSeenWelcome()) return <Navigate to="/welcome" replace />;
-  return <TodayPage />;
-}
-
 export default function App() {
   return (
     <LanguageProvider>
       <HashRouter>
         <Routes>
+          {/* The welcome page IS the root — every visitor is met by it. */}
+          <Route path="/" element={<WelcomePage />} />
           <Route element={<Layout />}>
-            <Route index element={<HomeGate />} />
+            <Route path="today" element={<TodayPage />} />
             <Route path="day/:date" element={<TodayPage />} />
             <Route path="week" element={<WeekPage />} />
             <Route
@@ -48,8 +43,8 @@ export default function App() {
             <Route path="export" element={<ExportPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>
-          {/* Welcome and report render without the app chrome. */}
-          <Route path="welcome" element={<WelcomePage />} />
+          {/* Old links to the previous welcome address still work. */}
+          <Route path="welcome" element={<Navigate to="/" replace />} />
           <Route
             path="report"
             element={

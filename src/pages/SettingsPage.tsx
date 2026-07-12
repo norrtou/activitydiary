@@ -193,10 +193,20 @@ export function SettingsPage() {
             {t('settings.aboutText')}
           </p>
           <div className="settings-actions">
-            <Link className="btn btn-ghost" to="/welcome">
+            <Link className="btn btn-ghost" to="/">
               {t('settings.showWelcome')}
             </Link>
           </div>
+          <h3 className="settings-more-title">{t('settings.moreTitle')}</h3>
+          <a
+            className="project-link"
+            href="https://anatomiquiz.se"
+            target="_blank"
+            rel="noopener"
+          >
+            <span className="project-link-name">Anatomiquiz</span>
+            <span className="project-link-desc">{t('settings.anatomiquizText')}</span>
+          </a>
         </section>
       </div>
 

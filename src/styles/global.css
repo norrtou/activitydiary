@@ -231,9 +231,9 @@ textarea {
     color: var(--accent-strong);
   }
 
-  .app-brand svg {
-    width: 26px;
-    height: 26px;
+  .app-brand img {
+    width: 38px;
+    height: auto;
   }
 
   .app-main {
@@ -1179,6 +1179,45 @@ dialog.sheet::backdrop {
   margin-top: 12px;
 }
 
+.settings-more-title {
+  margin-top: 22px;
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+}
+
+.project-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-m);
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+}
+
+.project-link-name {
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.project-link-name::after {
+  content: ' ↗';
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.project-link-desc {
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+}
+
 .swatch-chip > span {
   width: 44px;
   height: 44px;
@@ -1215,20 +1254,13 @@ dialog.sheet::backdrop {
 }
 
 .welcome-logo {
-  width: 84px;
-  height: 84px;
-  border-radius: 26px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  box-shadow: var(--shadow-fab);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: min(190px, 46vw);
 }
 
-.welcome-logo svg {
-  width: 44px;
-  height: 44px;
+.welcome-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .welcome-hero h1 {
@@ -1293,6 +1325,18 @@ dialog.sheet::backdrop {
 .welcome-feature p {
   color: var(--ink-secondary);
   font-size: 0.92rem;
+}
+
+.welcome-ot {
+  max-width: 920px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 20px;
+}
+
+.welcome-ot p {
+  margin-top: 8px;
+  color: var(--ink-secondary);
 }
 
 .welcome-footer {
@@ -1389,9 +1433,9 @@ dialog.sheet::backdrop {
   letter-spacing: 0.08em;
 }
 
-.report-brand svg {
-  width: 18px;
-  height: 18px;
+.report-brand img {
+  width: 30px;
+  height: auto;
 }
 
 .report-head h1 {
@@ -1614,7 +1658,9 @@ dialog.sheet::backdrop {
   .report-sheet {
     box-shadow: none;
     border-radius: 0;
-    margin: 0;
+    /* The on-screen mobile scaling must never affect the printed page. */
+    margin: 0 !important;
+    transform: none !important;
   }
 }
 
@@ -1634,6 +1680,12 @@ dialog.sheet::backdrop {
 
 .boot p {
   color: var(--ink-secondary);
+}
+
+.boot-logo {
+  width: min(220px, 56vw);
+  height: auto;
+  justify-self: center;
 }
 
 .boot-loading {
