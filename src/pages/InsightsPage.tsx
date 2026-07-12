@@ -9,11 +9,12 @@ import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useI18n } from '../i18n';
 import { entriesForRange } from '../lib/db';
-import { resolveTheme, useSettings } from '../lib/settings';
+import { useSettings } from '../lib/settings';
 import { swatchColor } from '../lib/palette';
 import { categoryName } from '../lib/categoryName';
 import {
   activeDayCount,
+  categoryRatingAverages,
   categoryTotals,
   dailyRatingAverage,
   hourlyCategoryFractions,
@@ -33,6 +34,7 @@ import { useActiveCategories, useCategoryMap } from '../components/useCategories
 import { BalanceDonut } from '../components/charts/BalanceDonut';
 import { ActivityClock } from '../components/charts/ActivityClock';
 import { DailyStacked } from '../components/charts/DailyStacked';
+import { ExperienceBars } from '../components/charts/ExperienceBars';
 import { TrendChart } from '../components/charts/TrendChart';
 import { ChartLegend, hoursLabel } from '../components/charts/common';
 import { IconChevronLeft, IconChevronRight } from '../components/icons';
@@ -54,7 +56,6 @@ function monthDays(anchor: string): string[] {
 export function InsightsPage() {
   const { t, locale } = useI18n();
   const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
 
   const [period, setPeriod] = useState<PeriodMode>('week');
   const [anchor, setAnchor] = useState(toDateKey());
@@ -98,6 +99,8 @@ export function InsightsPage() {
   const sleepAvg = sleepAveragePerActiveDay(entries, categories);
   const energy = dailyRatingAverage(entries, 'energy');
   const moodValues = dailyRatingAverage(entries, 'mood');
+  const energyPerActivity = categoryRatingAverages(entries, 'energy');
+  const moodPerActivity = categoryRatingAverages(entries, 'mood');
 
   const hourUnit = t('common.hourUnit');
   const minUnit = t('common.minUnit');
@@ -156,8 +159,8 @@ export function InsightsPage() {
           <section className="card chart-card">
             <h2>{t('insights.balance')}</h2>
             <p className="muted">{t('insights.balanceHint')}</p>
-            <BalanceDonut totals={totals} categories={categoryMap} mode={mode} />
-            <ChartLegend categories={usedCategories} mode={mode} />
+            <BalanceDonut totals={totals} categories={categoryMap} />
+            <ChartLegend categories={usedCategories} />
           </section>
 
           <section className="card chart-card">
@@ -167,9 +170,9 @@ export function InsightsPage() {
               hourly={hourlyCategoryFractions(entries, activeDays)}
               categories={usedCategories}
               categoryMap={categoryMap}
-              mode={mode}
+             
             />
-            <ChartLegend categories={usedCategories} mode={mode} />
+            <ChartLegend categories={usedCategories} />
           </section>
 
           <section className="card chart-card chart-card-wide">
@@ -179,11 +182,47 @@ export function InsightsPage() {
               days={days}
               perDay={perDayCategoryMinutes(entries, days)}
               categories={categories}
-              mode={mode}
+             
               monthly={period === 'month'}
             />
-            <ChartLegend categories={usedCategories} mode={mode} />
+            <ChartLegend categories={usedCategories} />
           </section>
+
+          {(energyPerActivity.length > 0 || moodPerActivity.length > 0) && (
+            <section className="card chart-card chart-card-wide">
+              <h2>{t('insights.experience')}</h2>
+              <p className="muted">{t('insights.experienceHint')}</p>
+              <div className="xp-grid">
+                {energyPerActivity.length > 0 && (
+                  <div>
+                    <h3>{t('insights.exp.energyTitle')}</h3>
+                    <ExperienceBars
+                      ratings={energyPerActivity}
+                      categoryMap={categoryMap}
+                      center={0}
+                      range={2}
+                      negLabel={t('insights.exp.takes')}
+                      posLabel={t('insights.exp.gives')}
+                      signed
+                    />
+                  </div>
+                )}
+                {moodPerActivity.length > 0 && (
+                  <div>
+                    <h3>{t('insights.exp.moodTitle')}</h3>
+                    <ExperienceBars
+                      ratings={moodPerActivity}
+                      categoryMap={categoryMap}
+                      center={3}
+                      range={2}
+                      negLabel={t('insights.exp.bad')}
+                      posLabel={t('insights.exp.good')}
+                    />
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
           {energy.size > 0 && (
             <section className="card chart-card">
@@ -193,7 +232,7 @@ export function InsightsPage() {
                 days={days}
                 values={energy}
                 domain={[-2, 2]}
-                color={swatchColor('blue', mode)}
+                color={swatchColor('blue')}
                 zeroLine
                 monthly={period === 'month'}
               />
@@ -208,7 +247,7 @@ export function InsightsPage() {
                 days={days}
                 values={moodValues}
                 domain={[1, 5]}
-                color={swatchColor('aqua', mode)}
+                color={swatchColor('aqua')}
                 monthly={period === 'month'}
               />
             </section>
@@ -239,10 +278,10 @@ export function InsightsPage() {
                           <th scope="row">
                             <span
                               className="legend-dot"
-                              style={{ background: swatchColor(cat.swatchId, mode) }}
+                              style={{ background: swatchColor(cat.swatchId) }}
                               aria-hidden
                             />
-                            <span aria-hidden>{cat.icon}</span> {categoryName(cat, t)}
+                            {categoryName(cat, t)}
                           </th>
                           <td>{hoursLabel(tot.minutes, locale, hourUnit)}</td>
                           <td>{Math.round(tot.share * 100)} %</td>

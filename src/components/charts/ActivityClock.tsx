@@ -52,10 +52,9 @@ interface Props {
   hourly: Map<number, Map<number, number>>;
   categories: Category[];
   categoryMap: Map<number, Category>;
-  mode: 'light' | 'dark';
 }
 
-export function ActivityClock({ hourly, categories, categoryMap, mode }: Props) {
+export function ActivityClock({ hourly, categories, categoryMap }: Props) {
   const { t } = useI18n();
 
   return (
@@ -98,7 +97,7 @@ export function ActivityClock({ hourly, categories, categoryMap, mode }: Props) 
               key={`hour-${h}`}
               d={annularSector(R_INNER, R_OUTER, a0, a1)}
               fill={
-                solid ? swatchColor(top.cat.swatchId, mode) : swatchWash(top.cat.swatchId, mode)
+                solid ? swatchColor(top.cat.swatchId) : swatchWash(top.cat.swatchId)
               }
             >
               <title>
@@ -125,11 +124,35 @@ export function ActivityClock({ hourly, categories, categoryMap, mode }: Props) 
             </text>
           );
         })}
-        <text x={CX} y={CY - 32} textAnchor="middle" dominantBaseline="middle" fontSize="15" aria-hidden>
-          🌙
+        {/* Night/day markers at 00 and 12: small stroke icons, no emoji. */}
+        <g
+          transform={`translate(${CX - 7}, ${CY - 39}) scale(0.58)`}
+          fill="none"
+          stroke="var(--ink-muted)"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+        </g>
+        <g
+          transform={`translate(${CX - 7}, ${CY + 27}) scale(0.58)`}
+          fill="none"
+          stroke="var(--ink-muted)"
+          strokeWidth={2}
+          strokeLinecap="round"
+          aria-hidden
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8" />
+        </g>
+        {/* Plain words so the dial reads instantly: night up, day down. */}
+        <text x={CX} y={CY - 15} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">
+          {t('insights.clockNight')}
         </text>
-        <text x={CX} y={CY + 34} textAnchor="middle" dominantBaseline="middle" fontSize="15" aria-hidden>
-          ☀️
+        <text x={CX} y={CY + 18} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">
+          {t('insights.clockDay')}
         </text>
       </svg>
     </div>

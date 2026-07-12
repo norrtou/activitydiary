@@ -9,7 +9,6 @@ import type { AppSettings } from './types';
 const STORAGE_KEY = 'activity-diary.settings';
 
 export const DEFAULT_SETTINGS: AppSettings = {
-  theme: 'system',
   firstDayOfWeek: 1,
   dayStartHour: 6,
   slotMinutes: 30,
@@ -52,8 +51,22 @@ export function useSettings(): AppSettings {
   return useSyncExternalStore(subscribe, getSettings);
 }
 
-/** Resolve the effective color mode, honouring the OS preference for 'system'. */
-export function resolveTheme(theme: AppSettings['theme']): 'light' | 'dark' {
-  if (theme !== 'system') return theme;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const WELCOME_KEY = 'activity-diary.welcomed';
+
+/** Whether the visitor has left the welcome page via "Get started". */
+export function hasSeenWelcome(): boolean {
+  try {
+    return localStorage.getItem(WELCOME_KEY) === '1';
+  } catch {
+    return true; // No storage — don't trap the user on the welcome page.
+  }
 }
+
+export function markWelcomeSeen(): void {
+  try {
+    localStorage.setItem(WELCOME_KEY, '1');
+  } catch {
+    // Non-fatal: the welcome page will simply show again next visit.
+  }
+}
+

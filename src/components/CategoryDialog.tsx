@@ -1,14 +1,13 @@
 /**
- * Dialog for creating or editing a category: name, emoji icon, and one of
- * the validated color swatches. Renaming a built-in category converts it to
- * a custom name (the color/icon/entries are untouched).
+ * Dialog for creating or editing a category: name and one of the validated
+ * color swatches (the color is the category's visual identity throughout the
+ * app). Renaming a built-in category converts it to a custom name.
  */
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n';
 import { db } from '../lib/db';
 import { categoryName, categoryQuickLabels } from '../lib/categoryName';
 import { SWATCHES, swatchColor } from '../lib/palette';
-import { resolveTheme, useSettings } from '../lib/settings';
 import type { Category } from '../lib/types';
 import { IconClose } from './icons';
 
@@ -20,12 +19,9 @@ interface Props {
 
 export function CategoryDialog({ category, onClose }: Props) {
   const { t } = useI18n();
-  const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [name, setName] = useState(category ? categoryName(category, t) : '');
-  const [icon, setIcon] = useState(category?.icon ?? '⭐');
   const [swatchId, setSwatchId] = useState(category?.swatchId ?? 'blue');
   const [quickText, setQuickText] = useState(
     category ? categoryQuickLabels(category, t).join(', ') : '',
@@ -55,7 +51,6 @@ export function CategoryDialog({ category, onClose }: Props) {
       await db.categories.update(category.id, {
         // Only detach from i18n if the user actually changed the name.
         ...(keepBuiltinName ? {} : { name: trimmed, builtinKey: undefined }),
-        icon: icon.trim() || '⭐',
         swatchId,
         quickLabels: keepDefaultQuick ? undefined : quick,
       });
@@ -64,7 +59,7 @@ export function CategoryDialog({ category, onClose }: Props) {
       const maxSort = all.reduce((m, c) => Math.max(m, c.sortOrder), -1);
       await db.categories.add({
         name: trimmed,
-        icon: icon.trim() || '⭐',
+        icon: '',
         swatchId,
         quickLabels: quick.length > 0 ? quick : undefined,
         sortOrder: maxSort + 1,
@@ -100,18 +95,6 @@ export function CategoryDialog({ category, onClose }: Props) {
       </div>
 
       <div className="field">
-        <label htmlFor="cat-icon">{t('settings.categoryIcon')}</label>
-        <input
-          id="cat-icon"
-          type="text"
-          value={icon}
-          maxLength={4}
-          style={{ width: 80, textAlign: 'center', fontSize: '1.3rem' }}
-          onChange={(e) => setIcon(e.target.value)}
-        />
-      </div>
-
-      <div className="field">
         <label htmlFor="cat-quick">
           {t('settings.quickLabels', { optional: t('common.optional') })}
         </label>
@@ -139,7 +122,7 @@ export function CategoryDialog({ category, onClose }: Props) {
               />
               <span
                 style={{
-                  background: swatchColor(s.id, mode),
+                  background: swatchColor(s.id),
                   borderColor: swatchId === s.id ? 'var(--ink)' : 'transparent',
                 }}
               />

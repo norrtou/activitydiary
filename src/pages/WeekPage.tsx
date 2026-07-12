@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useI18n } from '../i18n';
 import { entriesForRange } from '../lib/db';
-import { resolveTheme, useSettings } from '../lib/settings';
+import { useSettings } from '../lib/settings';
 import { swatchColor } from '../lib/palette';
 import {
   addDays,
@@ -28,7 +28,6 @@ const DAY_COLUMN_HEIGHT = 288; // px for 24 h => 12 px per hour
 export function WeekPage() {
   const { t, locale } = useI18n();
   const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
   const categories = useCategoryMap();
 
   const [weekStart, setWeekStart] = useState(() =>
@@ -108,7 +107,7 @@ export function WeekPage() {
                           ((e.endMin - e.startMin) / DAY_MIN) * DAY_COLUMN_HEIGHT,
                           2,
                         ),
-                        background: swatchColor(cat.swatchId, mode),
+                        background: swatchColor(cat.swatchId),
                       }}
                     />
                   );

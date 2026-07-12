@@ -11,6 +11,7 @@ import { createBackup, downloadFile, entriesToCsv } from '../lib/export';
 import { startOfWeek, toDateKey, addDays, fromDateKey } from '../lib/time';
 import { useSettings } from '../lib/settings';
 import { useCategoryMap } from '../components/useCategories';
+import { IconArchive, IconFileText, IconTable } from '../components/icons';
 
 type Range = 'week' | 'month' | 'all';
 
@@ -89,7 +90,7 @@ export function ExportPage() {
       <div className="export-cards">
         <section className="card export-card">
           <span className="export-icon" aria-hidden>
-            📄
+            <IconFileText />
           </span>
           <div className="export-text">
             <h2>{t('export.pdf')}</h2>
@@ -102,7 +103,7 @@ export function ExportPage() {
 
         <section className="card export-card">
           <span className="export-icon" aria-hidden>
-            📊
+            <IconTable />
           </span>
           <div className="export-text">
             <h2>{t('export.csv')}</h2>
@@ -115,7 +116,7 @@ export function ExportPage() {
 
         <section className="card export-card">
           <span className="export-icon" aria-hidden>
-            💾
+            <IconArchive />
           </span>
           <div className="export-text">
             <h2>{t('export.json')}</h2>

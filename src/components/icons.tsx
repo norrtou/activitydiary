@@ -87,6 +87,53 @@ export function IconChevronRight(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** App mark: a clock face — time is the diary's raw material. */
+export function IconLogo(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2.2" />
+    </svg>
+  );
+}
+
+export function IconFileText(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M13.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5L13.5 3Z" />
+      <path d="M13.5 3v5.5H19M8.5 13h7M8.5 16.5h7" />
+    </svg>
+  );
+}
+
+export function IconTable(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2" />
+      <path d="M3.5 9.5h17M9.5 9.5V19.5M15.5 9.5V19.5" />
+    </svg>
+  );
+}
+
+export function IconArchive(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="4" width="17" height="5" rx="1.5" />
+      <path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4" />
+    </svg>
+  );
+}
+
+export function IconLock(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="5" y="10.5" width="14" height="10" rx="2.5" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+      <circle cx="12" cy="15.5" r="1.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function IconClose(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

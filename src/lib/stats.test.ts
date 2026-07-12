@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   activeDayCount,
+  categoryRatingAverages,
   categoryTotals,
   dailyRatingAverage,
   hourlyCategoryFractions,
@@ -46,6 +47,28 @@ describe('dailyRatingAverage', () => {
     // Day 1: work 480 min at −1, leisure 120 min at +2 → (−480+240)/600 = −0.4
     expect(energy.get('2026-07-01')).toBeCloseTo(-0.4);
     expect(energy.has('2026-07-02')).toBe(false);
+  });
+});
+
+describe('categoryRatingAverages', () => {
+  it('averages per category, weighted by duration', () => {
+    const withTwoRatedWork: Entry[] = [
+      ...entries,
+      { id: 5, date: '2026-07-02', startMin: 480, endMin: 720, categoryId: 2, energy: 1 }, // work 4 h at +1
+    ];
+    const energy = categoryRatingAverages(withTwoRatedWork, 'energy');
+    const work = energy.find((r) => r.categoryId === 2)!;
+    // work: 480 min at −1, 240 min at +1 → (−480+240)/720 = −1/3
+    expect(work.avg).toBeCloseTo(-1 / 3);
+    expect(work.minutes).toBe(720);
+  });
+
+  it('skips categories without any rated entries', () => {
+    const energy = categoryRatingAverages(entries, 'energy');
+    expect(energy.some((r) => r.categoryId === 1)).toBe(false); // sleep never rated
+    const mood = categoryRatingAverages(entries, 'mood');
+    expect(mood.map((r) => r.categoryId)).toEqual([3]);
+    expect(mood[0].avg).toBe(5);
   });
 });
 

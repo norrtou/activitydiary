@@ -1,16 +1,17 @@
 /**
  * Settings — everything that is deliberately kept out of the everyday flow:
- * language, appearance, category management, timeline preferences, and data
- * management (import, sample data, erase).
+ * language, category management, timeline preferences, and data management
+ * (import, sample data, erase).
  */
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n';
 import { db } from '../lib/db';
 import { categoryName } from '../lib/categoryName';
 import { swatchColor } from '../lib/palette';
 import { parseBackup, restoreBackup } from '../lib/export';
 import { loadSampleWeek } from '../lib/sampleData';
-import { resolveTheme, updateSettings, useSettings } from '../lib/settings';
+import { updateSettings, useSettings } from '../lib/settings';
 import { useAllCategories } from '../components/useCategories';
 import { CategoryDialog } from '../components/CategoryDialog';
 import type { Category } from '../lib/types';
@@ -18,7 +19,6 @@ import type { Category } from '../lib/types';
 export function SettingsPage() {
   const { t, lang, setLang } = useI18n();
   const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
   const categories = useAllCategories() ?? [];
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -56,6 +56,7 @@ export function SettingsPage() {
       <div className="settings-stack">
         <section className="card">
           <h2>{t('settings.language')}</h2>
+          <p className="muted">{t('settings.languageHint')}</p>
           <div className="chip-row" style={{ marginTop: 10 }}>
             <label className="chip">
               <input type="radio" name="lang" checked={lang === 'en'} onChange={() => setLang('en')} />
@@ -69,23 +70,6 @@ export function SettingsPage() {
         </section>
 
         <section className="card">
-          <h2>{t('settings.theme')}</h2>
-          <div className="chip-row" style={{ marginTop: 10 }}>
-            {(['light', 'dark', 'system'] as const).map((th) => (
-              <label key={th} className="chip">
-                <input
-                  type="radio"
-                  name="theme"
-                  checked={settings.theme === th}
-                  onChange={() => updateSettings({ theme: th })}
-                />
-                <span>{t(`settings.theme.${th}` as const)}</span>
-              </label>
-            ))}
-          </div>
-        </section>
-
-        <section className="card">
           <h2>{t('settings.categories')}</h2>
           <p className="muted">{t('settings.categoriesHint')}</p>
           <ul className="category-list">
@@ -93,11 +77,11 @@ export function SettingsPage() {
               <li key={cat.id} className={cat.archived ? 'is-archived' : undefined}>
                 <span
                   className="legend-dot"
-                  style={{ background: swatchColor(cat.swatchId, mode) }}
+                  style={{ background: swatchColor(cat.swatchId) }}
                   aria-hidden
                 />
                 <span className="category-list-name">
-                  <span aria-hidden>{cat.icon}</span> {categoryName(cat, t)}
+                  {categoryName(cat, t)}
                 </span>
                 <button type="button" className="link-btn" onClick={() => setEditing(cat)}>
                   {t('common.edit')}
@@ -208,6 +192,11 @@ export function SettingsPage() {
           <p className="muted" style={{ marginTop: 8 }}>
             {t('settings.aboutText')}
           </p>
+          <div className="settings-actions">
+            <Link className="btn btn-ghost" to="/welcome">
+              {t('settings.showWelcome')}
+            </Link>
+          </div>
         </section>
       </div>
 

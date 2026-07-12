@@ -3,47 +3,38 @@
  * HashRouter is used deliberately — it needs no server-side fallback, which
  * makes deep links reliable on GitHub Pages.
  */
-import { lazy, Suspense, useEffect } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './i18n';
-import { resolveTheme, useSettings } from './lib/settings';
+import { hasSeenWelcome } from './lib/settings';
 import { Layout } from './components/Layout';
 import { TodayPage } from './pages/TodayPage';
 import { WeekPage } from './pages/WeekPage';
 import { ExportPage } from './pages/ExportPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { ReportPage } from './pages/ReportPage';
+import { WelcomePage } from './pages/WelcomePage';
 
 // Charts (Recharts) are heavy — split them out so the everyday views load fast.
 const InsightsPage = lazy(() =>
   import('./pages/InsightsPage').then((m) => ({ default: m.InsightsPage })),
 );
+const ReportPage = lazy(() =>
+  import('./pages/ReportPage').then((m) => ({ default: m.ReportPage })),
+);
 
-/** Applies the chosen theme to <html data-theme> and follows OS changes. */
-function ThemeApplier() {
-  const { theme } = useSettings();
-
-  useEffect(() => {
-    const apply = () => {
-      document.documentElement.dataset.theme = resolveTheme(theme);
-    };
-    apply();
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, [theme]);
-
-  return null;
+/** First visit lands on the welcome page; after "Get started" the index is Today. */
+function HomeGate() {
+  if (!hasSeenWelcome()) return <Navigate to="/welcome" replace />;
+  return <TodayPage />;
 }
 
 export default function App() {
   return (
     <LanguageProvider>
-      <ThemeApplier />
       <HashRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route index element={<TodayPage />} />
+            <Route index element={<HomeGate />} />
             <Route path="day/:date" element={<TodayPage />} />
             <Route path="week" element={<WeekPage />} />
             <Route
@@ -57,8 +48,16 @@ export default function App() {
             <Route path="export" element={<ExportPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>
-          {/* The report opens without the app chrome so it prints cleanly. */}
-          <Route path="report" element={<ReportPage />} />
+          {/* Welcome and report render without the app chrome. */}
+          <Route path="welcome" element={<WelcomePage />} />
+          <Route
+            path="report"
+            element={
+              <Suspense fallback={null}>
+                <ReportPage />
+              </Suspense>
+            }
+          />
         </Routes>
       </HashRouter>
     </LanguageProvider>

@@ -17,8 +17,8 @@ export default defineConfig({
         short_name: 'Activity Diary',
         description:
           'Log your daily activities and see your occupational balance — private, offline-capable, in English and Swedish.',
-        theme_color: '#2a78d6',
-        background_color: '#f9f9f7',
+        theme_color: '#2d5456',
+        background_color: '#dce4ef',
         display: 'standalone',
         lang: 'en',
         icons: [

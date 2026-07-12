@@ -15,7 +15,7 @@ import { useI18n } from '../i18n';
 import { swatchColor, swatchWash } from '../lib/palette';
 import { categoryName } from '../lib/categoryName';
 import { minutesToHHMM, nowMinutes, snapMinutes, toDateKey, DAY_MIN } from '../lib/time';
-import { resolveTheme, useSettings } from '../lib/settings';
+import { useSettings } from '../lib/settings';
 import type { Category, Entry } from '../lib/types';
 
 export const HOUR_PX = 52;
@@ -69,7 +69,6 @@ function layoutLanes(entries: Entry[]): Map<number, { lane: number; lanes: numbe
 export function DayTimeline({ date, entries, categories, onCreate, onEdit }: Props) {
   const { t, lang } = useI18n();
   const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
   const containerRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState<RangeDraft | null>(null);
   const dragOrigin = useRef<number | null>(null);
@@ -199,8 +198,8 @@ export function DayTimeline({ date, entries, categories, onCreate, onEdit }: Pro
                 height: Math.max(height, 14),
                 left: `${lane * width}%`,
                 width: `calc(${width}% - 4px)`,
-                background: swatchWash(cat.swatchId, mode),
-                borderLeftColor: swatchColor(cat.swatchId, mode),
+                background: swatchWash(cat.swatchId),
+                borderLeftColor: swatchColor(cat.swatchId),
               }}
               aria-label={t('a11y.entrySummary', {
                 category: name,
@@ -211,7 +210,7 @@ export function DayTimeline({ date, entries, categories, onCreate, onEdit }: Pro
             >
               {height >= 30 && (
                 <span className="tl-entry-name">
-                  <span aria-hidden>{cat.icon}</span> {name}
+                  {name}
                 </span>
               )}
               {height >= 46 && (

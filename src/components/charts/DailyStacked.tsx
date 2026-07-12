@@ -23,12 +23,13 @@ interface Props {
   days: string[];
   perDay: Map<string, Map<number, number>>;
   categories: Category[];
-  mode: 'light' | 'dark';
   /** Compact tick labels (dates instead of weekdays) for month view. */
   monthly?: boolean;
+  /** Chart height in px (defaults to the Insights card size). */
+  height?: number;
 }
 
-export function DailyStacked({ days, perDay, categories, mode, monthly }: Props) {
+export function DailyStacked({ days, perDay, categories, monthly, height = 260 }: Props) {
   const { t, locale } = useI18n();
 
   const data = days.map((day, i) => {
@@ -51,7 +52,7 @@ export function DailyStacked({ days, perDay, categories, mode, monthly }: Props)
   const used = categories.filter((cat) => data.some((row) => row[`c${cat.id}`] != null));
 
   return (
-    <div className="chart-box" style={{ height: 260 }}>
+    <div className="chart-box" style={{ height }}>
       <ResponsiveContainer>
         <BarChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
           <CartesianGrid stroke="var(--hairline)" vertical={false} />
@@ -85,9 +86,9 @@ export function DailyStacked({ days, perDay, categories, mode, monthly }: Props)
             <Bar
               key={cat.id}
               dataKey={`c${cat.id}` as string}
-              name={`${cat.icon} ${categoryName(cat, t)}`}
+              name={categoryName(cat, t)}
               stackId="day"
-              fill={swatchColor(cat.swatchId, mode)}
+              fill={swatchColor(cat.swatchId)}
               stroke="var(--surface)"
               strokeWidth={1}
               isAnimationActive={false}

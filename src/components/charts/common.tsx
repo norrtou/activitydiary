@@ -1,5 +1,5 @@
 /**
- * Shared chart pieces: the category legend (color + icon + name — identity is
+ * Shared chart pieces: the category legend (color dot + name — identity is
  * never color-alone) and tooltip styling shared by all Recharts charts.
  */
 import type { CSSProperties } from 'react';
@@ -24,13 +24,7 @@ export function hoursLabel(minutes: number, locale: string, hourUnit: string): s
   return `${(minutes / 60).toLocaleString(locale, { maximumFractionDigits: 1 })} ${hourUnit}`;
 }
 
-export function ChartLegend({
-  categories,
-  mode,
-}: {
-  categories: Category[];
-  mode: 'light' | 'dark';
-}) {
+export function ChartLegend({ categories }: { categories: Category[] }) {
   const { t } = useI18n();
   return (
     <ul className="chart-legend">
@@ -38,10 +32,10 @@ export function ChartLegend({
         <li key={cat.id}>
           <span
             className="legend-dot"
-            style={{ background: swatchColor(cat.swatchId, mode) }}
+            style={{ background: swatchColor(cat.swatchId) }}
             aria-hidden
           />
-          <span aria-hidden>{cat.icon}</span> {categoryName(cat, t)}
+          {categoryName(cat, t)}
         </li>
       ))}
     </ul>

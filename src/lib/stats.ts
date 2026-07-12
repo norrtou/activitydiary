@@ -97,6 +97,42 @@ export function hourlyCategoryFractions(
   return result;
 }
 
+export interface CategoryRating {
+  categoryId: number;
+  /** Duration-weighted average of the rating over the period. */
+  avg: number;
+  /** Total rated minutes behind the average. */
+  minutes: number;
+}
+
+/**
+ * How each kind of activity FEELS: duration-weighted average of an optional
+ * rating (energy or mood) per category, over entries that carry the rating.
+ * This is the occupational-balance core — time use (categoryTotals) says how
+ * the period looks, this says how it felt. Categories without any rated
+ * entries are absent.
+ */
+export function categoryRatingAverages(
+  entries: Entry[],
+  field: 'energy' | 'mood',
+): CategoryRating[] {
+  const acc = new Map<number, { weighted: number; weight: number }>();
+  for (const e of entries) {
+    const value = e[field];
+    if (value == null) continue;
+    const w = e.endMin - e.startMin;
+    const a = acc.get(e.categoryId) ?? { weighted: 0, weight: 0 };
+    a.weighted += value * w;
+    a.weight += w;
+    acc.set(e.categoryId, a);
+  }
+  return [...acc.entries()].map(([categoryId, { weighted, weight }]) => ({
+    categoryId,
+    avg: weighted / weight,
+    minutes: weight,
+  }));
+}
+
 /** Number of distinct days that have at least one entry. */
 export function activeDayCount(entries: Entry[]): number {
   return new Set(entries.map((e) => e.date)).size;

@@ -1,66 +1,47 @@
 /*
  * Global styles and design tokens.
  *
- * Theming: <html data-theme="light|dark"> is set from Settings (or the OS
- * preference). All colors are expressed as tokens so both modes are
- * deliberate choices, validated against the chart surfaces.
+ * A single light theme built on the app's blue-gray → deep teal ramp:
+ *   #dce4ef · #b3c9d2 · #90a9b1 · #6b8ca0 · #4a6e7a · #2d5456 · #1e4345 · #16292f · #0f1c23
+ * The palest step is the page, white cards float on it, mid steps carry
+ * secondary ink and hairlines, and the deep teal steps are the accent and
+ * primary ink. Category data colors live in src/lib/palette.ts (validated
+ * against the white card surface) and are never used for chrome.
  */
 
 :root {
   color-scheme: light;
 
-  /* Surfaces & ink (light) */
-  --page: #f9f9f7;
-  --surface: #fcfcfb;
+  /* Surfaces & ink */
+  --page: #dce4ef;
+  --surface: #ffffff;
   --surface-raised: #ffffff;
-  --ink: #0b0b0b;
-  --ink-secondary: #52514e;
-  --ink-muted: #898781;
-  --hairline: #e1e0d9;
-  --border: rgba(11, 11, 11, 0.1);
+  --ink: #12242c;
+  --ink-secondary: #3d5a64;
+  --ink-muted: #587683;
+  --hairline: #ccd9e4;
+  --border: rgba(18, 36, 44, 0.08);
 
-  /* Brand accent (categorical slot 1, validated) */
-  --accent: #2a78d6;
+  /* Accent: the deep teal steps of the ramp */
+  --accent: #2d5456;
+  --accent-strong: #1e4345;
   --accent-ink: #ffffff;
-  --accent-soft: rgba(42, 120, 214, 0.12);
+  --accent-soft: rgba(74, 110, 122, 0.14);
+  --accent-wash: #eef3f8;
 
-  --danger: #d03b3b;
-  --danger-soft: rgba(208, 59, 59, 0.1);
+  --danger: #b8433c;
+  --danger-soft: rgba(184, 67, 60, 0.1);
 
-  --shadow-card: 0 1px 2px rgba(11, 11, 11, 0.05), 0 4px 16px rgba(11, 11, 11, 0.06);
-  --shadow-sheet: 0 -8px 40px rgba(11, 11, 11, 0.18);
-  --shadow-fab: 0 4px 14px rgba(42, 120, 214, 0.4);
+  --shadow-card: 0 1px 2px rgba(18, 36, 44, 0.05), 0 6px 22px rgba(18, 36, 44, 0.07);
+  --shadow-sheet: 0 -8px 40px rgba(18, 36, 44, 0.2);
+  --shadow-fab: 0 4px 16px rgba(30, 67, 69, 0.35);
 
   --radius-s: 8px;
   --radius-m: 12px;
-  --radius-l: 20px;
+  --radius-l: 18px;
 
   --nav-height: 64px;
   --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
-}
-
-[data-theme='dark'] {
-  color-scheme: dark;
-
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --surface-raised: #242422;
-  --ink: #ffffff;
-  --ink-secondary: #c3c2b7;
-  --ink-muted: #898781;
-  --hairline: #2c2c2a;
-  --border: rgba(255, 255, 255, 0.1);
-
-  --accent: #3987e5;
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(57, 135, 229, 0.2);
-
-  --danger: #e66767;
-  --danger-soft: rgba(230, 103, 103, 0.16);
-
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-sheet: 0 -8px 40px rgba(0, 0, 0, 0.6);
-  --shadow-fab: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -88,14 +69,15 @@ h3 {
   margin: 0;
   line-height: 1.25;
   font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
 }
 
 h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 h3 {
@@ -148,9 +130,9 @@ textarea {
 .app-main {
   flex: 1;
   width: 100%;
-  max-width: 880px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 16px 16px calc(var(--nav-height) + env(safe-area-inset-bottom) + 24px);
+  padding: 18px 16px calc(var(--nav-height) + env(safe-area-inset-bottom) + 28px);
 }
 
 .app-nav {
@@ -182,7 +164,8 @@ textarea {
   color: var(--ink-muted);
   font-size: 0.7rem;
   font-weight: 550;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-m);
+  transition: color 0.12s ease, background 0.12s ease;
 }
 
 .app-nav a.active {
@@ -204,11 +187,11 @@ textarea {
     inset: auto;
     top: 0;
     height: 100dvh;
-    width: 216px;
+    width: 224px;
     flex-shrink: 0;
     border-top: none;
     border-right: 1px solid var(--hairline);
-    padding: 24px 12px;
+    padding: 24px 14px;
   }
 
   .app-nav ul {
@@ -224,23 +207,37 @@ textarea {
     min-height: 44px;
     padding: 0 14px;
     font-size: 0.95rem;
+    border-radius: 999px;
+  }
+
+  .app-nav a:hover {
+    color: var(--ink);
+    background: var(--accent-soft);
   }
 
   .app-nav a.active {
-    background: var(--accent-soft);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
   }
 
   .app-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0 14px 20px;
+    padding: 0 14px 22px;
     font-weight: 700;
     font-size: 1.05rem;
+    color: var(--accent-strong);
+  }
+
+  .app-brand svg {
+    width: 26px;
+    height: 26px;
   }
 
   .app-main {
-    padding: 24px 32px 48px;
+    padding: 28px 36px 48px;
   }
 }
 
@@ -261,7 +258,11 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-l);
   box-shadow: var(--shadow-card);
-  padding: 16px;
+  padding: 20px;
+}
+
+a.btn {
+  text-decoration: none;
 }
 
 .btn {
@@ -270,14 +271,10 @@ textarea {
   justify-content: center;
   gap: 8px;
   min-height: 44px;
-  padding: 0 20px;
+  padding: 0 22px;
   border-radius: 999px;
   font-weight: 600;
-  transition: filter 0.15s ease;
-}
-
-.btn:hover {
-  filter: brightness(1.05);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-primary {
@@ -285,10 +282,19 @@ textarea {
   color: var(--accent-ink);
 }
 
+.btn-primary:hover {
+  background: var(--accent-strong);
+}
+
 .btn-ghost {
   background: transparent;
-  color: var(--ink-secondary);
-  border: 1px solid var(--hairline);
+  color: var(--accent-strong);
+  border: 1.5px solid var(--hairline);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .btn-danger {
@@ -324,6 +330,10 @@ textarea {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-fab);
+}
+
+.fab:hover {
+  background: var(--accent-strong);
 }
 
 @media (min-width: 760px) {
@@ -413,7 +423,7 @@ dialog.sheet {
 }
 
 dialog.sheet::backdrop {
-  background: rgba(11, 11, 11, 0.45);
+  background: rgba(15, 28, 35, 0.45);
 }
 
 @media (min-width: 760px) {
@@ -509,11 +519,11 @@ dialog.sheet::backdrop {
 .chip > span {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-height: 44px;
-  padding: 6px 12px;
-  border: 2px solid var(--hairline);
-  border-radius: var(--radius-m);
+  padding: 6px 14px;
+  border: 1.5px solid var(--hairline);
+  border-radius: 999px;
   background: var(--surface);
   font-weight: 550;
   font-size: 0.9rem;
@@ -523,6 +533,7 @@ dialog.sheet::backdrop {
 .chip input:checked + span {
   border-color: var(--chip-color, var(--accent));
   background: var(--accent-soft);
+  font-weight: 600;
 }
 
 .chip input:focus-visible + span {
@@ -533,7 +544,7 @@ dialog.sheet::backdrop {
 .chip-small > span {
   justify-content: center;
   min-width: 48px;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
 }
 
 .time-row {
@@ -835,6 +846,7 @@ dialog.sheet::backdrop {
 .stat-value {
   font-size: 1.45rem;
   font-weight: 700;
+  color: var(--accent-strong);
 }
 
 .stat-label {
@@ -882,6 +894,134 @@ dialog.sheet::backdrop {
   height: 10px;
   border-radius: 3px;
   flex-shrink: 0;
+}
+
+/* ---------- Experience bars: how activities feel (diverging) ---------- */
+
+.xp {
+  display: grid;
+  gap: 7px;
+  font-size: 0.82rem;
+}
+
+.xp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px 28px;
+  margin-top: 8px;
+}
+
+@media (min-width: 700px) {
+  .xp-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.xp-grid h3 {
+  margin-bottom: 8px;
+}
+
+.xp-title {
+  margin: 0 0 6px;
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--ink-secondary);
+}
+
+.xp-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 36%) 1fr 36px;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Compact variant on the A4 sheet — every rated activity must fit. */
+.report-sheet .xp {
+  font-size: 0.72rem;
+  gap: 4px;
+}
+
+.report-sheet .xp-track {
+  height: 9px;
+}
+
+.report-sheet .xp-fill {
+  top: 1.5px;
+  bottom: 1.5px;
+}
+
+.report-sheet .xp-grid {
+  gap: 10px 24px;
+  margin-top: 4px;
+}
+
+.report-sheet .xp-title {
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+}
+
+.xp-name {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.xp-name .legend-dot {
+  align-self: center;
+}
+
+.xp-name-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.xp-track {
+  position: relative;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--accent-wash);
+}
+
+.xp-center {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink-muted);
+  border-radius: 1px;
+}
+
+.xp-fill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 4px;
+  min-width: 2px;
+}
+
+.xp-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+
+.xp-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+.xp-fill,
+.xp-center {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
 
 .period-toggle {
@@ -943,7 +1083,7 @@ dialog.sheet::backdrop {
 }
 
 .numbers-table tbody th .legend-dot {
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 .numbers-table tfoot th,
@@ -963,12 +1103,25 @@ dialog.sheet::backdrop {
 .export-card {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .export-icon {
-  font-size: 1.8rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.export-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .export-text {
@@ -994,7 +1147,7 @@ dialog.sheet::backdrop {
 .category-list li {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-height: 44px;
   border-bottom: 1px solid var(--hairline);
   padding: 2px 0;
@@ -1034,76 +1187,413 @@ dialog.sheet::backdrop {
   border-width: 3px;
 }
 
-/* ---------- Report (screen + print) ---------- */
+/* ---------- Welcome / start page ---------- */
 
-.report {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 24px 20px 48px;
-  background: #ffffff;
-  color: #0b0b0b;
+.welcome {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 48px;
+  background:
+    radial-gradient(1100px 480px at 50% -140px, rgba(107, 140, 160, 0.22), transparent 70%),
+    var(--page);
 }
 
-.report h1 {
-  margin-bottom: 4px;
+.welcome-lang {
+  align-self: flex-end;
 }
 
-.report h2 {
-  margin: 24px 0 8px;
+.welcome-hero {
+  max-width: 620px;
+  text-align: center;
+  margin-top: clamp(16px, 8vh, 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
-.report h3 {
-  margin: 18px 0 6px;
-  text-transform: capitalize;
+.welcome-logo {
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow-fab);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.report table {
+.welcome-logo svg {
+  width: 44px;
+  height: 44px;
+}
+
+.welcome-hero h1 {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  color: var(--accent-strong);
+}
+
+.welcome-tagline {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+
+.welcome-lead {
+  color: var(--ink-secondary);
+  font-size: 1.02rem;
+  max-width: 54ch;
+}
+
+.welcome-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-lg {
+  min-height: 52px;
+  padding: 0 30px;
+  font-size: 1.05rem;
+}
+
+.welcome-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  max-width: 920px;
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
+  margin-top: clamp(28px, 6vh, 56px);
 }
 
-.report th,
-.report td {
-  text-align: left;
-  padding: 5px 8px;
-  border-bottom: 1px solid #e1e0d9;
-  vertical-align: top;
+.welcome-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
 }
 
-.report thead th {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #52514e;
+.welcome-feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.report tfoot th,
-.report tfoot td {
-  font-weight: 700;
-  border-bottom: none;
+.welcome-feature p {
+  color: var(--ink-secondary);
+  font-size: 0.92rem;
 }
 
-.report-note {
-  max-width: 220px;
-  white-space: pre-wrap;
+.welcome-footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+/* ---------- Report: A4 sheet, on screen and in print ----------
+
+   The sheet is a fixed 210×296mm surface — the preview on screen IS the
+   printed page. Light scaffolding only: thin rules, muted labels, small
+   color marks. No heavy fills, so it prints crisp and ink-friendly. */
+
+.report-page {
+  min-height: 100dvh;
+  background: var(--page);
+  padding: 16px;
 }
 
 .report-toolbar {
+  max-width: calc(210mm + 32px);
+  margin: 0 auto 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-toolbar-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
 }
 
-.report-footer {
-  margin-top: 32px;
+.report-toolbar a {
+  color: var(--accent-strong);
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.report-day {
-  break-inside: avoid;
+.report-toolbar a:hover {
+  text-decoration: underline;
+}
+
+.report-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: flex-start;
+}
+
+.report-options .chip-group {
+  margin: 0;
+}
+
+.report-options .chip-small > span {
+  min-height: 36px;
+  font-size: 0.82rem;
+  padding: 4px 12px;
+}
+
+.report-sheet {
+  --rep-hairline: #ccd9e4;
+  --rep-soft: #eef3f8;
+
+  width: 210mm;
+  height: 296mm;
+  overflow: hidden;
+  margin: 0 auto;
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+  border-radius: 4px;
+  padding: 12mm;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* The preview keeps the true A4 size; small screens scroll sideways. */
+.report-scroll {
+  overflow-x: auto;
+}
+
+.report-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.report-brand svg {
+  width: 18px;
+  height: 18px;
+}
+
+.report-head h1 {
+  font-size: 1.6rem;
+  margin: 2px 0 2px;
+}
+
+.report-meta {
+  color: var(--ink-secondary);
+  font-size: 0.9rem;
+}
+
+.report-rule {
+  border: none;
+  border-top: 2px solid var(--accent);
+  margin: 10px 0 0;
+}
+
+/* Key figures: one hairline-separated strip, no boxes. */
+.report-figures {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.report-figure {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 4px 16px;
+  border-left: 1px solid var(--rep-hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.report-figure:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.report-figure strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+
+.report-figure span {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  align-content: start;
+  flex: 1;
+  min-height: 0;
+  /* If the user enables more than fits, clip above the footer — the preview
+     shows exactly what will print, never an overlapping mess. */
+  overflow: hidden;
+}
+
+.report-module {
+  min-width: 0;
+}
+
+.report-module-wide {
+  grid-column: 1 / -1;
+}
+
+.report-module h3 {
+  font-size: 0.88rem;
+  margin-bottom: 1px;
+}
+
+.report-module-hint {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+/* The clock scales with its column — cap it so the sheet keeps its budget. */
+.report-sheet .clock-box {
+  max-width: 215px;
+}
+
+/* Horizontal balance bars: thin marks on a pale track, values beside. */
+.report-bars {
+  display: grid;
+  gap: 7px;
+  font-size: 0.8rem;
+}
+
+.rbar {
+  display: grid;
+  grid-template-columns: minmax(130px, max-content) 1fr minmax(92px, auto);
+  align-items: center;
+  gap: 8px;
+}
+
+.rbar-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rbar-track {
+  height: 9px;
+  border-radius: 4.5px;
+  background: var(--rep-soft);
+  overflow: hidden;
+}
+
+.rbar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4.5px;
+}
+
+.rbar-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-secondary);
+}
+
+.report-legend {
+  margin-top: 0;
+  font-size: 0.75rem;
+  gap: 4px 12px;
+}
+
+/* Compact numbers table on the sheet. */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-table th,
+.report-table td {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--rep-hairline);
+}
+
+.report-table td:not(:first-child),
+.report-table th:not(:first-child) {
+  text-align: right;
+}
+
+.report-table thead th {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  border-bottom: 2px solid var(--rep-hairline);
+}
+
+.report-table tbody th {
+  font-weight: 550;
+}
+
+.report-table tbody tr:nth-child(even) th,
+.report-table tbody tr:nth-child(even) td {
+  background: var(--rep-soft);
+}
+
+.report-table tfoot th,
+.report-table tfoot td {
+  font-weight: 700;
+  border-bottom: none;
+}
+
+.report-foot {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--rep-hairline);
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.report-sheet .legend-dot,
+.rbar-fill,
+.report-table tbody tr:nth-child(even) th,
+.report-table tbody tr:nth-child(even) td {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+@page {
+  size: a4;
+  margin: 0;
 }
 
 @media print {
@@ -1111,12 +1601,20 @@ dialog.sheet::backdrop {
     display: none !important;
   }
 
-  body {
+  body,
+  .report-page {
     background: #ffffff;
+    padding: 0;
   }
 
-  .report {
-    padding: 0;
+  .report-scroll {
+    overflow: visible;
+  }
+
+  .report-sheet {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
   }
 }
 

@@ -75,7 +75,6 @@ export type BuiltinCategoryKey =
 
 /** App-wide preferences, persisted in localStorage (see lib/settings.ts). */
 export interface AppSettings {
-  theme: 'light' | 'dark' | 'system';
   /** 0 = Sunday, 1 = Monday. */
   firstDayOfWeek: 0 | 1;
   /** Hour the Today timeline scrolls to / visually starts at. */

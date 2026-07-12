@@ -25,9 +25,11 @@ interface Props {
   /** Draw a neutral zero line (energy). */
   zeroLine?: boolean;
   monthly?: boolean;
+  /** Chart height in px (defaults to the Insights card size). */
+  height?: number;
 }
 
-export function TrendChart({ days, values, domain, color, zeroLine, monthly }: Props) {
+export function TrendChart({ days, values, domain, color, zeroLine, monthly, height = 200 }: Props) {
   const { locale } = useI18n();
 
   const data = days.map((day, i) => ({
@@ -41,7 +43,7 @@ export function TrendChart({ days, values, domain, color, zeroLine, monthly }: P
   }));
 
   return (
-    <div className="chart-box" style={{ height: 200 }}>
+    <div className="chart-box" style={{ height }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 8, right: 8, left: -28, bottom: 0 }}>
           <CartesianGrid stroke="var(--hairline)" vertical={false} />

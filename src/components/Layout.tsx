@@ -8,6 +8,7 @@ import { useT } from '../i18n';
 import {
   IconExport,
   IconInsights,
+  IconLogo,
   IconSettings,
   IconToday,
   IconWeek,
@@ -31,7 +32,7 @@ export function Layout() {
       </a>
       <nav className="app-nav" aria-label={t('nav.main')}>
         <div className="app-brand" aria-hidden>
-          <span>📔</span>
+          <IconLogo />
           <span>{t('app.name')}</span>
         </div>
         <ul>

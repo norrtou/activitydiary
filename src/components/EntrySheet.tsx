@@ -11,7 +11,6 @@ import { useI18n } from '../i18n';
 import { db } from '../lib/db';
 import { categoryName, categoryQuickLabels } from '../lib/categoryName';
 import { swatchColor } from '../lib/palette';
-import { resolveTheme, useSettings } from '../lib/settings';
 import { minutesToHHMM, parseHHMM, splitOverMidnight } from '../lib/time';
 import type { Category, Entry, EnergyRating, MoodRating } from '../lib/types';
 import { IconClose } from './icons';
@@ -33,12 +32,9 @@ interface Props {
 
 const ENERGY_VALUES: EnergyRating[] = [-2, -1, 0, 1, 2];
 const MOOD_VALUES: MoodRating[] = [1, 2, 3, 4, 5];
-const MOOD_EMOJI: Record<MoodRating, string> = { 1: '😞', 2: '🙁', 3: '😐', 4: '🙂', 5: '😄' };
 
 export function EntrySheet({ draft, categories, onClose }: Props) {
   const { t } = useI18n();
-  const settings = useSettings();
-  const mode = resolveTheme(settings.theme);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   // Kept in state (not read from the prop) so "at the same time I also…"
@@ -156,7 +152,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
             <label
               key={cat.id}
               className="chip"
-              style={{ '--chip-color': swatchColor(cat.swatchId, mode) } as React.CSSProperties}
+              style={{ '--chip-color': swatchColor(cat.swatchId) } as React.CSSProperties}
             >
               <input
                 type="radio"
@@ -165,7 +161,12 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
                 onChange={() => pickCategory(cat)}
               />
               <span>
-                <span aria-hidden>{cat.icon}</span> {categoryName(cat, t)}
+                <span
+                  className="legend-dot"
+                  style={{ background: swatchColor(cat.swatchId) }}
+                  aria-hidden
+                />
+                {categoryName(cat, t)}
               </span>
             </label>
           ))}
@@ -224,7 +225,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
         disabled={categoryId == null}
         onClick={saveAndAddParallel}
       >
-        ⧉ {t('entry.parallel')}
+        {t('entry.parallel')}
       </button>
 
       <button
@@ -261,6 +262,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
 
           <fieldset className="chip-group">
             <legend>{t('entry.mood')}</legend>
+            <p className="muted">{t('entry.moodHint')}</p>
             <div className="chip-row">
               {MOOD_VALUES.map((v) => (
                 <label key={v} className="chip chip-small">
@@ -272,7 +274,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
                     onClick={() => mood === v && setMood(undefined)}
                     aria-label={t(`entry.mood.${v}` as const)}
                   />
-                  <span aria-hidden>{MOOD_EMOJI[v]}</span>
+                  <span aria-hidden>{v}</span>
                 </label>
               ))}
             </div>
