@@ -247,7 +247,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
 
       <button
         type="button"
-        className="btn btn-ghost parallel-btn"
+        className="btn parallel-btn"
         disabled={categoryId == null}
         onClick={saveAndAddParallel}
       >

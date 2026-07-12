@@ -577,9 +577,25 @@ dialog.sheet::backdrop {
   padding-top: 12px;
 }
 
+/* Tonal accent button: must catch the eye among the fields, but stay a
+   step below the solid "Save" in the hierarchy. */
 .parallel-btn {
   width: 100%;
   margin-bottom: 10px;
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent);
+  color: var(--accent-strong);
+}
+
+.parallel-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.parallel-btn:disabled {
+  border-color: var(--hairline);
+  background: transparent;
+  color: var(--ink-muted);
 }
 
 .parallel-notice {
