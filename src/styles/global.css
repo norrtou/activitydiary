@@ -839,6 +839,13 @@ dialog.sheet::backdrop {
   }
 }
 
+/* Grid items must be allowed to shrink below their content width — otherwise
+   the numbers table dictates the column width and the whole page (and every
+   chart, once Recharts has measured it) ends up wider than a phone screen. */
+.insights-grid > * {
+  min-width: 0;
+}
+
 .stat-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1700,9 +1707,7 @@ dialog.sheet::backdrop {
   .report-sheet {
     box-shadow: none;
     border-radius: 0;
-    /* The on-screen mobile scaling must never affect the printed page. */
-    margin: 0 !important;
-    transform: none !important;
+    margin: 0;
   }
 }
 

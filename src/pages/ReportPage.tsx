@@ -8,7 +8,7 @@
  * clock, day-by-day bars, energy/mood curves, key figures and the numbers
  * table. Choices persist in localStorage.
  */
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useI18n } from '../i18n';
@@ -135,21 +135,6 @@ export function ReportPage() {
   const [params] = useSearchParams();
   const [options, setOptions] = useState<ReportOptions>(loadOptions);
 
-  // On narrow screens the A4 sheet is scaled down to fit the viewport;
-  // printing always uses the true size (transform is reset in print CSS).
-  const sheetRef = useRef<HTMLElement | null>(null);
-  const [scale, setScale] = useState(1);
-  useLayoutEffect(() => {
-    const update = () => {
-      const el = sheetRef.current;
-      if (!el?.parentElement) return;
-      setScale(Math.min(1, el.parentElement.clientWidth / el.offsetWidth));
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  });
-
   const setOption = <K extends keyof ReportOptions>(key: K, value: ReportOptions[K]) => {
     const next = { ...options, [key]: value };
     setOptions(next);
@@ -270,19 +255,7 @@ export function ReportPage() {
       </div>
 
       <div className="report-scroll">
-        <main
-          className="report-sheet"
-          ref={sheetRef}
-          style={
-            scale < 1
-              ? {
-                  transform: `scale(${scale})`,
-                  transformOrigin: 'top left',
-                  marginBottom: `calc(${scale - 1} * 296mm)`,
-                }
-              : undefined
-          }
-        >
+        <main className="report-sheet">
           <header className="report-head">
             <p className="report-brand">
               <img src={logoMarkUrl} alt="" width={640} height={388} /> {t('app.name')}
