@@ -585,10 +585,16 @@ dialog.sheet::backdrop {
 .parallel-notice {
   background: var(--accent-soft);
   color: var(--ink);
-  font-weight: 550;
+  border-left: 4px solid var(--accent);
   border-radius: var(--radius-m);
-  padding: 10px 14px;
+  padding: 12px 14px;
   margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+.parallel-notice strong {
+  display: block;
+  color: var(--accent-strong);
 }
 
 .form-error {

@@ -54,7 +54,10 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
       (draft.entry.energy != null || draft.entry.mood != null || !!draft.entry.note),
   );
   const [error, setError] = useState<string | null>(null);
-  const [parallelNotice, setParallelNotice] = useState(false);
+  // Name of the activity that was just saved via "at the same time I also…".
+  // Non-null puts the sheet in parallel mode: new title, banner, scroll to top.
+  const [parallelFrom, setParallelFrom] = useState<string | null>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   const selectedCategory = categories.find((c) => c.id === categoryId);
   const quickLabels = selectedCategory ? categoryQuickLabels(selectedCategory, t) : [];
@@ -100,6 +103,7 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
    */
   const saveAndAddParallel = async () => {
     if (!(await saveEntry())) return;
+    const savedName = label.trim() || (selectedCategory ? categoryName(selectedCategory, t) : '');
     setEditing(undefined);
     setCategoryId(null);
     setLabel('');
@@ -108,7 +112,11 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
     setNote('');
     setShowMore(false);
     setError(null);
-    setParallelNotice(true);
+    setParallelFrom(savedName);
+    // The button sits far down the sheet — without this the switch to a new
+    // entry is invisible on a phone. Show the new title/banner and announce it.
+    headingRef.current?.focus({ preventScroll: true });
+    dialogRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   /** Switching category clears a label that was one of the old quick picks. */
@@ -128,20 +136,33 @@ export function EntrySheet({ draft, categories, onClose }: Props) {
     <dialog
       ref={dialogRef}
       className="sheet"
-      aria-label={editing ? t('entry.editTitle') : t('entry.newTitle')}
+      aria-label={
+        parallelFrom != null
+          ? t('entry.parallelTitle')
+          : editing
+            ? t('entry.editTitle')
+            : t('entry.newTitle')
+      }
       onClose={onClose}
       onCancel={onClose}
     >
       <div className="sheet-header">
-        <h2>{editing ? t('entry.editTitle') : t('entry.newTitle')}</h2>
+        <h2 ref={headingRef} tabIndex={-1}>
+          {parallelFrom != null
+            ? t('entry.parallelTitle')
+            : editing
+              ? t('entry.editTitle')
+              : t('entry.newTitle')}
+        </h2>
         <button type="button" className="icon-btn" aria-label={t('a11y.closeDialog')} onClick={onClose}>
           <IconClose />
         </button>
       </div>
 
-      {parallelNotice && (
+      {parallelFrom != null && (
         <p className="parallel-notice" role="status">
-          {t('entry.parallelSaved')}
+          <strong>{t('entry.parallelSaved', { name: parallelFrom })}</strong>{' '}
+          {t('entry.parallelNext', { start, end })}
         </p>
       )}
 
