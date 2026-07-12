@@ -117,6 +117,7 @@ export const en = {
   'welcome.ot.text':
     'Activity Diary was built as a free digital alternative to paper activity-diary templates — for time-use mapping with 24-hour registration of everyday life. Give your client the link; no account is needed. The client logs a week or a longer period and brings the one-page report to the follow-up, or shares the whole diary as a file. All data stays on the client’s device.',
   'welcome.footer': 'Free to use · In English and Swedish · Works offline',
+  'welcome.credit': 'Created by Norrtou Creations',
 
   // Week view
   'week.title': 'Week {num}',
@@ -239,6 +240,8 @@ export const en = {
   'settings.about': 'About',
   'settings.aboutText': 'Activity Diary is a free tool for tracking everyday activities and seeing the balance between sleep, work, play and everything in between. Your data never leaves your device.',
   'settings.moreTitle': 'More from the same maker',
+  'settings.norrtouText':
+    'The one-person studio behind Activity Diary — apps, web apps and words from Norrto, Sweden.',
   'settings.anatomiquizText':
     'A free interactive quiz on anatomy and medical terminology (in Swedish) — for healthcare students.',
   'settings.showWelcome': 'Show the welcome page',

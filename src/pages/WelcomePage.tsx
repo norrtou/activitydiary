@@ -102,6 +102,11 @@ export function WelcomePage() {
       </section>
 
       <p className="muted welcome-footer">{t('welcome.footer')}</p>
+      <p className="welcome-credit">
+        <a href="https://norrtou.se" target="_blank" rel="noopener">
+          {t('welcome.credit')}
+        </a>
+      </p>
     </main>
   );
 }

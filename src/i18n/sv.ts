@@ -107,6 +107,7 @@ export const sv: Record<MessageKey, string> = {
   'welcome.ot.text':
     'Aktivitetsdagboken är byggd som ett kostnadsfritt digitalt alternativ till aktivitetsdagbok på pappersmall — för aktivitetskartläggning och dygnsregistrering i vardagen. Ge klienten länken; inget konto behövs. Klienten registrerar en vecka eller en längre period och tar med den ensidiga rapporten till uppföljningen, eller delar hela dagboken som fil. All data stannar på klientens enhet.',
   'welcome.footer': 'Kostnadsfri · På svenska och engelska · Fungerar offline',
+  'welcome.credit': 'Skapad av Norrtou Creations',
 
   'week.title': 'Vecka {num}',
   'week.previous': 'Föregående vecka',
@@ -224,6 +225,8 @@ export const sv: Record<MessageKey, string> = {
   'settings.about': 'Om appen',
   'settings.aboutText': 'Aktivitetsdagboken är ett kostnadsfritt verktyg för att registrera vardagens aktiviteter och se balansen mellan sömn, arbete, nöje och allt däremellan. Dina uppgifter lämnar aldrig din enhet.',
   'settings.moreTitle': 'Mer från samma skapare',
+  'settings.norrtouText':
+    'Enmansstudion bakom Aktivitetsdagboken — appar, webbappar och ord från Norrto, Skåne.',
   'settings.anatomiquizText':
     'Kostnadsfritt interaktivt quiz i anatomi och medicinsk terminologi — för dig som studerar till ett vårdyrke.',
   'settings.showWelcome': 'Visa startsidan',

@@ -1370,6 +1370,22 @@ dialog.sheet::backdrop {
   text-align: center;
 }
 
+.welcome-credit {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.welcome-credit a {
+  color: var(--accent-strong);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.welcome-credit a:hover {
+  text-decoration: underline;
+}
+
 /* ---------- Report: A4 sheet, on screen and in print ----------
 
    The sheet is a fixed 210×296mm surface — the preview on screen IS the

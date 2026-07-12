@@ -198,6 +198,10 @@ export function SettingsPage() {
             </Link>
           </div>
           <h3 className="settings-more-title">{t('settings.moreTitle')}</h3>
+          <a className="project-link" href="https://norrtou.se" target="_blank" rel="noopener">
+            <span className="project-link-name">Norrtou Creations</span>
+            <span className="project-link-desc">{t('settings.norrtouText')}</span>
+          </a>
           <a
             className="project-link"
             href="https://anatomiquiz.se"
