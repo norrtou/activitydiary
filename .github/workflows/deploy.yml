@@ -40,3 +40,8 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      # Tell Bing (and other IndexNow engines) the page changed. The key file
+      # lives in public/<key>.txt so the engine can verify ownership.
+      - name: Ping IndexNow
+        run: |
+          curl -fsS "https://api.indexnow.org/indexnow?url=https%3A%2F%2Fnorrtou.github.io%2Factivitydiary%2F&key=2f67cf8d3bcbe9e2eb7701f1e7a16666" || true

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -7,61 +7,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#2d5456" />
 
-    <title>Activity Diary – see how your days are really spent | Aktivitetsdagboken</title>
+    <title>Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapi | Activity Diary for occupational therapy</title>
     <meta
       name="description"
-      content="Free activity diary for occupational balance: log sleep, work, social life, chores and fun through the day, see it in charts and numbers, and export reports. In English & Swedish. All data stays on your device. / Kostnadsfri aktivitetsdagbok: registrera vardagens aktiviteter, se balansen i diagram och siffror, exportera rapporter. All data stannar på din enhet."
+      content="Kostnadsfri digital aktivitetsdagbok för arbetsterapi: registrera vardagens aktiviteter, skatta energi och mående, se aktivitetsbalansen i tydliga diagram och skriv ut en PDF-rapport. All data stannar på din enhet. / Free digital activity diary for occupational therapy: log daily activities, rate energy and mood, see your occupational balance in clear charts and print a one-page PDF report."
     />
+    <meta
+      name="keywords"
+      content="aktivitetsdagbok, arbetsterapi, arbetsterapeut, aktivitetsbalans, aktivitetskartläggning, energikartläggning, mående, vardagsstruktur, dygnsrytm, tidsdagbok, activity diary, occupational therapy, occupational balance, time-use diary, energy mapping, mood tracking, activity log, PDF report"
+    />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://norrtou.github.io/activitydiary/" />
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Activity Diary – see how your days are really spent" />
+    <meta property="og:site_name" content="Aktivitetsdagboken / Activity Diary" />
+    <meta property="og:title" content="Aktivitetsdagboken – digital aktivitetsdagbok för arbetsterapi" />
     <meta
       property="og:description"
-      content="Log your daily activities, see the balance between sleep, work, social life and fun — visually and in numbers. Private by design: everything stays on your device."
+      content="Registrera vardagens aktiviteter, skatta energi och mående och se aktivitetsbalansen i tydliga diagram. Privat: all data stannar på din enhet. / Log daily activities, rate energy and mood, and see your occupational balance in clear charts."
     />
     <meta property="og:url" content="https://norrtou.github.io/activitydiary/" />
-    <meta property="og:locale" content="en_GB" />
-    <meta property="og:locale:alternate" content="sv_SE" />
+    <meta property="og:image" content="https://norrtou.github.io/activitydiary/pwa-512.png" />
+    <meta property="og:image:alt" content="Aktivitetsdagbokens appikon" />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:locale:alternate" content="en_GB" />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="https://norrtou.github.io/activitydiary/pwa-512.png" />
 
     <!-- Structured data for search engines and AI agents -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Activity Diary",
-        "alternateName": "Aktivitetsdagboken",
+        "name": "Aktivitetsdagboken",
+        "alternateName": "Activity Diary",
         "url": "https://norrtou.github.io/activitydiary/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Any (web browser)",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "inLanguage": ["en", "sv"],
-        "description": "A free, private activity diary for tracking everyday activities and occupational balance. Log sleep, work, social life, chores and leisure through the day; view charts and numbers; export CSV, JSON and PDF reports. All data is stored locally on the user's device — useful in occupational therapy.",
+        "inLanguage": ["sv", "en"],
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Occupational therapists and their clients / Arbetsterapeuter och deras klienter"
+        },
+        "description": "Kostnadsfri, privat aktivitetsdagbok för arbetsterapi: registrera vardagens aktiviteter, skatta energi och mående per aktivitet och se aktivitetsbalansen i tydliga diagram. All data lagras lokalt på enheten. / A free, private activity diary for occupational therapy: log everyday activities, rate energy and mood per activity, and see occupational balance in clear charts. All data is stored locally on the device.",
+        "keywords": "aktivitetsdagbok, arbetsterapi, aktivitetsbalans, occupational therapy, occupational balance, activity diary, time use, energy, mood",
         "featureList": [
-          "Visual day timeline for registering activities",
+          "Visual 24-hour day timeline for registering activities",
           "Week overview",
-          "Charts and statistics for occupational balance",
-          "Energy and mood tracking per activity",
-          "Export to CSV, JSON and PDF report",
-          "English and Swedish interface",
-          "Works offline, data stays on device"
+          "Charts for occupational balance: time distribution, activity clock, hours per day",
+          "Energy and mood rating per activity — shows what gives and takes energy",
+          "One-page printable PDF report with configurable charts",
+          "Export to CSV and JSON backup",
+          "Swedish and English interface",
+          "Works offline, all data stays on the device"
         ]
       }
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Static, crawlable content: replaced by the app as soon as it loads.
+         Keeps the key facts readable for search engines that don't run JS. -->
+    <div id="root">
+      <div class="boot">
+        <h1>Aktivitetsdagboken · Activity Diary</h1>
+        <p>
+          Kostnadsfri digital aktivitetsdagbok för arbetsterapi. Registrera vardagens aktiviteter —
+          sömn, arbete, hushåll, socialt, träning och fritid — skatta energi och mående, och se din
+          aktivitetsbalans i tydliga diagram: hur tiden fördelas, hur ett dygn ser ut och vilka
+          aktiviteter som ger eller tar energi. Skriv ut en snygg rapport som PDF att ta med till
+          din arbetsterapeut. All data stannar på din enhet.
+        </p>
+        <p lang="en">
+          Free digital activity diary for occupational therapy. Log everyday activities — sleep,
+          work, chores, social life, exercise and leisure — rate energy and mood, and see your
+          occupational balance in clear charts: how your time is divided, what a day looks like and
+          which activities give or take energy. Print a clean one-page PDF report to bring to your
+          occupational therapist. All data stays on your device.
+        </p>
+        <p class="boot-loading" aria-hidden="true">Laddar … / Loading …</p>
+      </div>
+    </div>
     <noscript>
-      <p>
-        Activity Diary is a free web app for logging daily activities and seeing your occupational
-        balance in charts and numbers. It needs JavaScript to run — please enable it.
-      </p>
       <p lang="sv">
         Aktivitetsdagboken är en kostnadsfri webbapp för att registrera vardagens aktiviteter och se
         din aktivitetsbalans i diagram och siffror. Den behöver JavaScript — aktivera det för att
         fortsätta.
+      </p>
+      <p lang="en">
+        Activity Diary is a free web app for logging daily activities and seeing your occupational
+        balance in charts and numbers. It needs JavaScript to run — please enable it.
       </p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>

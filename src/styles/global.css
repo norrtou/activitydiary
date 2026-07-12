@@ -1618,6 +1618,29 @@ dialog.sheet::backdrop {
   }
 }
 
+/* ---------- Boot content (static HTML shown until the app mounts) ---------- */
+
+.boot {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(24px, 10vh, 96px) 20px 40px;
+  display: grid;
+  gap: 14px;
+}
+
+.boot h1 {
+  color: var(--accent-strong);
+}
+
+.boot p {
+  color: var(--ink-secondary);
+}
+
+.boot-loading {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
 /* ---------- Skip link ---------- */
 
 .skip-link {
